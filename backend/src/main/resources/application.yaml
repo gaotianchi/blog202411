@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+
+spring:
+  application:
+    name: backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/blog?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: gaotianchi
+    password: 20040401
+  jpa:
+    hibernate:
+      ddl-auto: update
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/oauth2/jwks
+
+init-user:
+  username: gaotianchi
+  password: pass
+  pen-name: 高天驰
+
+logging:
+  level:
+    org.springframework.security: trace
+    web: trace

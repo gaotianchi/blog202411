@@ -1,10 +1,10 @@
-package com.gaotianchi.resourceservice;
+package com.gaotianchi.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendApplicationTests {
+class AuthApplicationTests {
 
     @Test
     void contextLoads() {

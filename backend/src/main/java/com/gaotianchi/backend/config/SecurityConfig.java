@@ -64,9 +64,6 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.PATCH, "/users/**", "/articles/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/users/**", "/articles/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/users/**", "/articles/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(Customizer.withDefaults())

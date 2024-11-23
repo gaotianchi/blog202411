@@ -1,19 +1,19 @@
 package com.gaotianchi.auth.service.impl;
 
-import com.gaotianchi.auth.entity.Role;
 import com.gaotianchi.auth.dao.RoleDao;
+import com.gaotianchi.auth.entity.Role;
 import com.gaotianchi.auth.service.RoleService;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 
 /**
  * 角色表(Role)表服务实现类
  *
  * @author gaotianchi
- * @since 2024-11-23 18:02:34
+ * @since 2024-11-23 19:41:38
  */
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {

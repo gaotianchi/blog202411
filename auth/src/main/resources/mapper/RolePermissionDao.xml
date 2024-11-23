@@ -46,36 +46,36 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="roleCode" useGeneratedKeys="true">
-        INSERT INTO role_permission()
-        VALUES ()
-    </insert>
+<!--    <insert id="insert" keyProperty="roleCode" useGeneratedKeys="true">-->
+<!--        INSERT INTO role_permission()-->
+<!--        VALUES ()-->
+<!--    </insert>-->
 
-    <insert id="insertBatch" keyProperty="roleCode" useGeneratedKeys="true">
-        INSERT INTO role_permission()
-        VALUES
-        <foreach collection="entities" item="entity" separator=",">
-            ()
-        </foreach>
-    </insert>
+<!--    <insert id="insertBatch" keyProperty="roleCode" useGeneratedKeys="true">-->
+<!--        INSERT INTO role_permission()-->
+<!--        VALUES-->
+<!--        <foreach collection="entities" item="entity" separator=",">-->
+<!--            ()-->
+<!--        </foreach>-->
+<!--    </insert>-->
 
-    <insert id="insertOrUpdateBatch" keyProperty="roleCode" useGeneratedKeys="true">
-        INSERT INTO role_permission()
-        VALUES
-        <foreach collection="entities" item="entity" separator=",">
-            ()
-        </foreach>
-        ON DUPLICATE KEY UPDATE
+<!--    <insert id="insertOrUpdateBatch" keyProperty="roleCode" useGeneratedKeys="true">-->
+<!--        INSERT INTO role_permission()-->
+<!--        VALUES-->
+<!--        <foreach collection="entities" item="entity" separator=",">-->
+<!--            ()-->
+<!--        </foreach>-->
+<!--        ON DUPLICATE KEY UPDATE-->
 
-    </insert>
+<!--    </insert>-->
 
     <!--通过主键修改数据-->
-    <update id="update">
-        UPDATE role_permission
-        <set>
-        </set>
-        WHERE role_code = #{roleCode}
-    </update>
+<!--    <update id="update">-->
+<!--        UPDATE role_permission-->
+<!--        <set>-->
+<!--        </set>-->
+<!--        WHERE role_code = #{roleCode}-->
+<!--    </update>-->
 
     <!--通过主键删除-->
     <delete id="deleteById">

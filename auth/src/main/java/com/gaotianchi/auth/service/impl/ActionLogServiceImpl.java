@@ -1,19 +1,19 @@
 package com.gaotianchi.auth.service.impl;
 
-import com.gaotianchi.auth.entity.ActionLog;
 import com.gaotianchi.auth.dao.ActionLogDao;
+import com.gaotianchi.auth.entity.ActionLog;
 import com.gaotianchi.auth.service.ActionLogService;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 
 /**
  * 用户行为日志(ActionLog)表服务实现类
  *
  * @author gaotianchi
- * @since 2024-11-23 18:02:34
+ * @since 2024-11-23 19:41:38
  */
 @Service("actionLogService")
 public class ActionLogServiceImpl implements ActionLogService {

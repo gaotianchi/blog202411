@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
  * 用户角色关联表(UserRole)表服务接口
  *
  * @author gaotianchi
- * @since 2024-11-23 18:02:35
+ * @since 2024-11-23 19:41:37
  */
 public interface UserRoleService {
 

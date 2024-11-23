@@ -1,6 +1,7 @@
 package com.gaotianchi.auth.dao;
 
 import com.gaotianchi.auth.entity.Permission;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author gaotianchi
  * @since 2024-11-23 18:02:34
  */
-@Repository
+@Mapper
 public interface PermissionDao {
 
     /**

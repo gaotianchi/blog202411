@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaotianchi.auth.dao.UserDao">
+
+    <resultMap type="com.gaotianchi.auth.entity.User" id="UserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginIp" column="last_login_ip" jdbcType="VARCHAR"/>
+        <result property="failedAttempts" column="failed_attempts" jdbcType="INTEGER"/>
+        <result property="isLocked" column="is_locked" jdbcType="INTEGER"/>
+        <result property="lockExpiration" column="lock_expiration" jdbcType="TIMESTAMP"/>
+        <result property="isClosed" column="is_closed" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserMap">
+        SELECT id,
+               username,
+               password,
+               email,
+               created_at,
+               updated_at,
+               last_login_time,
+               last_login_ip,
+               failed_attempts,
+               is_locked,
+               lock_expiration,
+               is_closed
+        FROM user
+        WHERE id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryByPage" resultMap="UserMap">
+        SELECT
+        id, username, password, email, created_at, updated_at, last_login_time, last_login_ip, failed_attempts,
+        is_locked, lock_expiration, is_closed
+        FROM user
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                AND username = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                AND password = #{password}
+            </if>
+            <if test="email != null and email != ''">
+                AND email = #{email}
+            </if>
+            <if test="createdAt != null">
+                AND created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                AND updated_at = #{updatedAt}
+            </if>
+            <if test="lastLoginTime != null">
+                AND last_login_time = #{lastLoginTime}
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                AND last_login_ip = #{lastLoginIp}
+            </if>
+            <if test="failedAttempts != null">
+                AND failed_attempts = #{failedAttempts}
+            </if>
+            <if test="isLocked != null">
+                AND is_locked = #{isLocked}
+            </if>
+            <if test="lockExpiration != null">
+                AND lock_expiration = #{lockExpiration}
+            </if>
+            <if test="isClosed != null">
+                AND is_closed = #{isClosed}
+            </if>
+        </where>
+        LIMIT #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM user
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                AND username = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                AND password = #{password}
+            </if>
+            <if test="email != null and email != ''">
+                AND email = #{email}
+            </if>
+            <if test="createdAt != null">
+                AND created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                AND updated_at = #{updatedAt}
+            </if>
+            <if test="lastLoginTime != null">
+                AND last_login_time = #{lastLoginTime}
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                AND last_login_ip = #{lastLoginIp}
+            </if>
+            <if test="failedAttempts != null">
+                AND failed_attempts = #{failedAttempts}
+            </if>
+            <if test="isLocked != null">
+                AND is_locked = #{isLocked}
+            </if>
+            <if test="lockExpiration != null">
+                AND lock_expiration = #{lockExpiration}
+            </if>
+            <if test="isClosed != null">
+                AND is_closed = #{isClosed}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO user(username, password, email, created_at, updated_at, last_login_time, last_login_ip,
+                         failed_attempts, is_locked, lock_expiration, is_closed)
+        VALUES (#{username}, #{password}, #{email}, #{createdAt}, #{updatedAt}, #{lastLoginTime}, #{lastLoginIp},
+                #{failedAttempts}, #{isLocked}, #{lockExpiration}, #{isClosed})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO user(username, password, email, created_at, updated_at, last_login_time, last_login_ip,
+        failed_attempts, is_locked, lock_expiration, is_closed)
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.createdAt}, #{entity.updatedAt},
+            #{entity.lastLoginTime}, #{entity.lastLoginIp}, #{entity.failedAttempts}, #{entity.isLocked},
+            #{entity.lockExpiration}, #{entity.isClosed})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO user(username, password, email, created_at, updated_at, last_login_time, last_login_ip,
+        failed_attempts, is_locked, lock_expiration, is_closed)
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.createdAt}, #{entity.updatedAt},
+            #{entity.lastLoginTime}, #{entity.lastLoginIp}, #{entity.failedAttempts}, #{entity.isLocked},
+            #{entity.lockExpiration}, #{entity.isClosed})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        username = values(username),
+        password = values(password),
+        email = values(email),
+        created_at = values(created_at),
+        updated_at = values(updated_at),
+        last_login_time = values(last_login_time),
+        last_login_ip = values(last_login_ip),
+        failed_attempts = values(failed_attempts),
+        is_locked = values(is_locked),
+        lock_expiration = values(lock_expiration),
+        is_closed = values(is_closed)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        UPDATE user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                last_login_ip = #{lastLoginIp},
+            </if>
+            <if test="failedAttempts != null">
+                failed_attempts = #{failedAttempts},
+            </if>
+            <if test="isLocked != null">
+                is_locked = #{isLocked},
+            </if>
+            <if test="lockExpiration != null">
+                lock_expiration = #{lockExpiration},
+            </if>
+            <if test="isClosed != null">
+                is_closed = #{isClosed},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        DELETE
+        FROM user
+        where id = #{id}
+    </delete>
+
+</mapper>
+

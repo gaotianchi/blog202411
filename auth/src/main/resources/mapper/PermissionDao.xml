@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaotianchi.auth.dao.PermissionDao">
+
+    <resultMap type="com.gaotianchi.auth.entity.Permission" id="PermissionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="code" column="code" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="PermissionMap">
+        SELECT id,
+               code,
+               name,
+               description
+        FROM permission
+        WHERE id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryByPage" resultMap="PermissionMap">
+        SELECT
+        id, code, name, description
+        FROM permission
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="code != null">
+                AND code = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                AND name = #{name}
+            </if>
+            <if test="description != null and description != ''">
+                AND description = #{description}
+            </if>
+        </where>
+        LIMIT #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM permission
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="code != null">
+                AND code = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                AND name = #{name}
+            </if>
+            <if test="description != null and description != ''">
+                AND description = #{description}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO permission(code, name, description)
+        VALUES (#{code}, #{name}, #{description})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO permission(code, name, description)
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.code}, #{entity.name}, #{entity.description})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO permission(code, name, description)
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.code}, #{entity.name}, #{entity.description})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        code = values(code),
+        name = values(name),
+        description = values(description)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        UPDATE permission
+        <set>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        DELETE
+        FROM permission
+        where id = #{id}
+    </delete>
+
+</mapper>
+

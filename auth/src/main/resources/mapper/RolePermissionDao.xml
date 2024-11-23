@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaotianchi.auth.dao.RolePermissionDao">
+
+    <resultMap type="com.gaotianchi.auth.entity.RolePermission" id="RolePermissionMap">
+        <result property="roleCode" column="role_code" jdbcType="INTEGER"/>
+        <result property="permissionCode" column="permission_code" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RolePermissionMap">
+        SELECT role_code,
+               permission_code
+        FROM role_permission
+        WHERE role_code = #{roleCode}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryByPage" resultMap="RolePermissionMap">
+        SELECT
+        role_code, permission_code
+        FROM role_permission
+        <where>
+            <if test="roleCode != null">
+                AND role_code = #{roleCode}
+            </if>
+            <if test="permissionCode != null">
+                AND permission_code = #{permissionCode}
+            </if>
+        </where>
+        LIMIT #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM role_permission
+        <where>
+            <if test="roleCode != null">
+                AND role_code = #{roleCode}
+            </if>
+            <if test="permissionCode != null">
+                AND permission_code = #{permissionCode}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="roleCode" useGeneratedKeys="true">
+        INSERT INTO role_permission()
+        VALUES ()
+    </insert>
+
+    <insert id="insertBatch" keyProperty="roleCode" useGeneratedKeys="true">
+        INSERT INTO role_permission()
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            ()
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="roleCode" useGeneratedKeys="true">
+        INSERT INTO role_permission()
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            ()
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        UPDATE role_permission
+        <set>
+        </set>
+        WHERE role_code = #{roleCode}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        DELETE
+        FROM role_permission
+        where role_code = #{roleCode}
+    </delete>
+
+</mapper>
+

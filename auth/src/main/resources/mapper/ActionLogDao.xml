@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaotianchi.auth.dao.ActionLogDao">
+
+    <resultMap type="com.gaotianchi.auth.entity.ActionLog" id="ActionLogMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="action" column="action" jdbcType="VARCHAR"/>
+        <result property="actionTime" column="action_time" jdbcType="TIMESTAMP"/>
+        <result property="objectType" column="object_type" jdbcType="VARCHAR"/>
+        <result property="objectId" column="object_id" jdbcType="INTEGER"/>
+        <result property="ipAddress" column="ip_address" jdbcType="VARCHAR"/>
+        <result property="deviceInfo" column="device_info" jdbcType="VARCHAR"/>
+        <result property="details" column="details" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ActionLogMap">
+        SELECT id,
+               user_id,
+               action,
+               action_time,
+               object_type,
+               object_id,
+               ip_address,
+               device_info,
+               details,
+               created_at
+        FROM action_log
+        WHERE id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryByPage" resultMap="ActionLogMap">
+        SELECT
+        id, user_id, action, action_time, object_type, object_id, ip_address, device_info, details, created_at
+        FROM action_log
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="action != null and action != ''">
+                AND action = #{action}
+            </if>
+            <if test="actionTime != null">
+                AND action_time = #{actionTime}
+            </if>
+            <if test="objectType != null and objectType != ''">
+                AND object_type = #{objectType}
+            </if>
+            <if test="objectId != null">
+                AND object_id = #{objectId}
+            </if>
+            <if test="ipAddress != null and ipAddress != ''">
+                AND ip_address = #{ipAddress}
+            </if>
+            <if test="deviceInfo != null and deviceInfo != ''">
+                AND device_info = #{deviceInfo}
+            </if>
+            <if test="details != null and details != ''">
+                AND details = #{details}
+            </if>
+            <if test="createdAt != null">
+                AND created_at = #{createdAt}
+            </if>
+        </where>
+        LIMIT #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM action_log
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="action != null and action != ''">
+                AND action = #{action}
+            </if>
+            <if test="actionTime != null">
+                AND action_time = #{actionTime}
+            </if>
+            <if test="objectType != null and objectType != ''">
+                AND object_type = #{objectType}
+            </if>
+            <if test="objectId != null">
+                AND object_id = #{objectId}
+            </if>
+            <if test="ipAddress != null and ipAddress != ''">
+                AND ip_address = #{ipAddress}
+            </if>
+            <if test="deviceInfo != null and deviceInfo != ''">
+                AND device_info = #{deviceInfo}
+            </if>
+            <if test="details != null and details != ''">
+                AND details = #{details}
+            </if>
+            <if test="createdAt != null">
+                AND created_at = #{createdAt}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO action_log(user_id, action, action_time, object_type, object_id, ip_address, device_info, details,
+                               created_at)
+        VALUES (#{userId}, #{action}, #{actionTime}, #{objectType}, #{objectId}, #{ipAddress}, #{deviceInfo},
+                #{details}, #{createdAt})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO action_log(user_id, action, action_time, object_type, object_id, ip_address, device_info, details,
+        created_at)
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.action}, #{entity.actionTime}, #{entity.objectType}, #{entity.objectId},
+            #{entity.ipAddress}, #{entity.deviceInfo}, #{entity.details}, #{entity.createdAt})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO action_log(user_id, action, action_time, object_type, object_id, ip_address, device_info, details,
+        created_at)
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.action}, #{entity.actionTime}, #{entity.objectType}, #{entity.objectId},
+            #{entity.ipAddress}, #{entity.deviceInfo}, #{entity.details}, #{entity.createdAt})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        user_id = values(user_id),
+        action = values(action),
+        action_time = values(action_time),
+        object_type = values(object_type),
+        object_id = values(object_id),
+        ip_address = values(ip_address),
+        device_info = values(device_info),
+        details = values(details),
+        created_at = values(created_at)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        UPDATE action_log
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="action != null and action != ''">
+                action = #{action},
+            </if>
+            <if test="actionTime != null">
+                action_time = #{actionTime},
+            </if>
+            <if test="objectType != null and objectType != ''">
+                object_type = #{objectType},
+            </if>
+            <if test="objectId != null">
+                object_id = #{objectId},
+            </if>
+            <if test="ipAddress != null and ipAddress != ''">
+                ip_address = #{ipAddress},
+            </if>
+            <if test="deviceInfo != null and deviceInfo != ''">
+                device_info = #{deviceInfo},
+            </if>
+            <if test="details != null and details != ''">
+                details = #{details},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        DELETE
+        FROM action_log
+        where id = #{id}
+    </delete>
+
+</mapper>
+

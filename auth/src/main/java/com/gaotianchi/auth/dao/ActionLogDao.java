@@ -1,6 +1,6 @@
 package com.gaotianchi.auth.dao;
 
-import com.gaotianchi.auth.model.entity.ActionLog;
+import com.gaotianchi.auth.entity.ActionLog;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -11,7 +11,7 @@ import java.util.List;
  * 用户行为日志(ActionLog)表数据库访问层
  *
  * @author gaotianchi
- * @since 2024-11-23 17:43:22
+ * @since 2024-11-23 18:02:33
  */
 @Repository
 public interface ActionLogDao {

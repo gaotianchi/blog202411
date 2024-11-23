@@ -1,6 +1,6 @@
 package com.gaotianchi.auth.service;
 
-import com.gaotianchi.auth.model.entity.UserRole;
+import com.gaotianchi.auth.entity.UserRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
  * 用户角色关联表(UserRole)表服务接口
  *
  * @author gaotianchi
- * @since 2024-11-23 17:32:41
+ * @since 2024-11-23 18:02:35
  */
 public interface UserRoleService {
 

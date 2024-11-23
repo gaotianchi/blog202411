@@ -1,6 +1,6 @@
 package com.gaotianchi.auth.service.impl;
 
-import com.gaotianchi.auth.model.entity.UserRole;
+import com.gaotianchi.auth.entity.UserRole;
 import com.gaotianchi.auth.dao.UserRoleDao;
 import com.gaotianchi.auth.service.UserRoleService;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.data.domain.PageRequest;
  * 用户角色关联表(UserRole)表服务实现类
  *
  * @author gaotianchi
- * @since 2024-11-23 17:48:23
+ * @since 2024-11-23 18:02:35
  */
 @Service("userRoleService")
 public class UserRoleServiceImpl implements UserRoleService {

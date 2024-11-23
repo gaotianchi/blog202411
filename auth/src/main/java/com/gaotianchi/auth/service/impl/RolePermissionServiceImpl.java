@@ -1,6 +1,6 @@
 package com.gaotianchi.auth.service.impl;
 
-import com.gaotianchi.auth.model.entity.RolePermission;
+import com.gaotianchi.auth.entity.RolePermission;
 import com.gaotianchi.auth.dao.RolePermissionDao;
 import com.gaotianchi.auth.service.RolePermissionService;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.data.domain.PageRequest;
  * 角色权限表(RolePermission)表服务实现类
  *
  * @author gaotianchi
- * @since 2024-11-23 17:48:23
+ * @since 2024-11-23 18:02:34
  */
 @Service("rolePermissionService")
 public class RolePermissionServiceImpl implements RolePermissionService {

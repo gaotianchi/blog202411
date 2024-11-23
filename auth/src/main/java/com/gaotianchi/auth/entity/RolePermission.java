@@ -1,4 +1,4 @@
-package com.gaotianchi.auth.model.entity;
+package com.gaotianchi.auth.entity;
 
 
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.io.Serial;
  * 角色权限表(RolePermission)实体类
  *
  * @author gaotianchi
- * @since 2024-11-23 17:12:51
+ * @since 2024-11-23 18:00:30
  */
 @Setter
 @Getter
@@ -20,7 +20,7 @@ import java.io.Serial;
 public class RolePermission implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 653699770544947531L;
+    private static final long serialVersionUID = 401260537757915641L;
 
     private Integer roleCode;  // 角色代码
     private Integer permissionCode;  // 权限代码

@@ -1,6 +1,6 @@
 package com.gaotianchi.auth.service.impl;
 
-import com.gaotianchi.auth.model.entity.User;
+import com.gaotianchi.auth.entity.User;
 import com.gaotianchi.auth.dao.UserDao;
 import com.gaotianchi.auth.service.UserService;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.data.domain.PageRequest;
  * 用户表(User)表服务实现类
  *
  * @author gaotianchi
- * @since 2024-11-23 17:48:23
+ * @since 2024-11-23 18:02:35
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {

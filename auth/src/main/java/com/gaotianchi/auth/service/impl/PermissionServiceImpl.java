@@ -1,6 +1,6 @@
 package com.gaotianchi.auth.service.impl;
 
-import com.gaotianchi.auth.model.entity.Permission;
+import com.gaotianchi.auth.entity.Permission;
 import com.gaotianchi.auth.dao.PermissionDao;
 import com.gaotianchi.auth.service.PermissionService;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.data.domain.PageRequest;
  * 权限表(Permission)表服务实现类
  *
  * @author gaotianchi
- * @since 2024-11-23 17:50:52
+ * @since 2024-11-23 18:02:34
  */
 @Service("permissionService")
 public class PermissionServiceImpl implements PermissionService {

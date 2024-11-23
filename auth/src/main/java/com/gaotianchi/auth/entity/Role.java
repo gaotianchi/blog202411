@@ -1,4 +1,4 @@
-package com.gaotianchi.auth.model.entity;
+package com.gaotianchi.auth.entity;
 
 import java.util.Date;
 
@@ -13,7 +13,7 @@ import java.io.Serial;
  * 角色表(Role)实体类
  *
  * @author gaotianchi
- * @since 2024-11-23 17:12:51
+ * @since 2024-11-23 18:00:29
  */
 @Setter
 @Getter
@@ -21,7 +21,7 @@ import java.io.Serial;
 public class Role implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -46528548567515425L;
+    private static final long serialVersionUID = 971841347992257629L;
 
     private Integer id;  // 自增ID
     private Integer code;  // 角色代码

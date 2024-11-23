@@ -1,4 +1,4 @@
-package com.gaotianchi.auth.model.entity;
+package com.gaotianchi.auth.entity;
 
 import java.util.Date;
 
@@ -13,7 +13,7 @@ import java.io.Serial;
  * 用户行为日志(ActionLog)实体类
  *
  * @author gaotianchi
- * @since 2024-11-23 17:12:51
+ * @since 2024-11-23 18:00:29
  */
 @Setter
 @Getter
@@ -21,7 +21,7 @@ import java.io.Serial;
 public class ActionLog implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -67608060201639290L;
+    private static final long serialVersionUID = -86918888593827507L;
 
     private Integer id;  // 自增ID
     private Integer userId;  // 用户ID

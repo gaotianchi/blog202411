@@ -1,6 +1,6 @@
 package com.gaotianchi.auth.dao;
 
-import com.gaotianchi.auth.model.entity.UserRole;
+import com.gaotianchi.auth.entity.UserRole;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -11,7 +11,7 @@ import java.util.List;
  * 用户角色关联表(UserRole)表数据库访问层
  *
  * @author gaotianchi
- * @since 2024-11-23 17:43:23
+ * @since 2024-11-23 18:02:35
  */
 @Repository
 public interface UserRoleDao {

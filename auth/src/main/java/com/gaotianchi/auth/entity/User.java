@@ -1,4 +1,4 @@
-package com.gaotianchi.auth.model.entity;
+package com.gaotianchi.auth.entity;
 
 import java.util.Date;
 
@@ -13,7 +13,7 @@ import java.io.Serial;
  * 用户表(User)实体类
  *
  * @author gaotianchi
- * @since 2024-11-23 17:12:51
+ * @since 2024-11-23 18:00:30
  */
 @Setter
 @Getter
@@ -21,7 +21,7 @@ import java.io.Serial;
 public class User implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -18454834158361515L;
+    private static final long serialVersionUID = -15525258711410910L;
 
     private Integer id;  // 自增ID
     private String username;  // 用户名

@@ -1,13 +1,12 @@
 package com.gaotianchi.auth.entity;
 
-import java.util.Date;
-
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.io.Serializable;
 import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 角色表(Role)实体类

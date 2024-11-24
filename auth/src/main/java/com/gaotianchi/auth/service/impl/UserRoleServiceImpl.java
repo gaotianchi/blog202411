@@ -25,17 +25,6 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param userId 主键
-     * @return UserRole 实例对象
-     */
-    @Override
-    public UserRole queryById(Integer userId) {
-        return userRoleDao.queryById(userId);
-    }
-
-    /**
      * 分页查询
      *
      * @param userRole    筛选条件
@@ -60,26 +49,4 @@ public class UserRoleServiceImpl implements UserRoleService {
         return userRole;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param userRole 实例对象
-     * @return UserRole 实例对象
-     */
-    @Override
-    public UserRole update(UserRole userRole) {
-        userRoleDao.update(userRole);
-        return queryById(userRole.getUserId());
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param userId 主键
-     * @return boolean 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer userId) {
-        return userRoleDao.deleteById(userId) > 0;
-    }
 }

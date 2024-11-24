@@ -4,7 +4,6 @@ import com.gaotianchi.auth.entity.RolePermission;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -18,12 +17,14 @@ import java.util.List;
 public interface RolePermissionDao {
 
     /**
-     * 通过ID查询单条数据
+     * Get the user's role and permission name, role name with prefix "ROLE_"
      *
-     * @param roleCode 主键
-     * @return Integer 实例对象
-     */
-    RolePermission queryById(Integer roleCode);
+     * @param username username
+     * @return java.util.List<java.lang.String>
+     * @author gaotianchi
+     * @since 2024/11/24 14:39
+     **/
+    List<String> queryUserPermissionNameAndRoleNameWithRolePrefixByUsername(String username);
 
     /**
      * 查询指定行数据
@@ -49,38 +50,5 @@ public interface RolePermissionDao {
      * @return int 影响行数
      */
     int insert(RolePermission rolePermission);
-
-    /**
-     * 批量新增数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<RolePermission> 实例对象列表
-     * @return int 影响行数
-     */
-    int insertBatch(@Param("entities") List<RolePermission> entities);
-
-    /**
-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<RolePermission> 实例对象列表
-     * @return int 影响行数
-     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
-     */
-    int insertOrUpdateBatch(@Param("entities") List<RolePermission> entities);
-
-    /**
-     * 修改数据
-     *
-     * @param rolePermission 实例对象
-     * @return int 影响行数
-     */
-    int update(RolePermission rolePermission);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param roleCode 主键
-     * @return int 影响行数
-     */
-    int deleteById(Integer roleCode);
 }
 

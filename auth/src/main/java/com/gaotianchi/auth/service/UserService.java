@@ -3,6 +3,7 @@ package com.gaotianchi.auth.service;
 import com.gaotianchi.auth.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * 用户表(User)表服务接口
@@ -10,7 +11,17 @@ import org.springframework.data.domain.PageRequest;
  * @author gaotianchi
  * @since 2024-11-23 19:41:37
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
+
+    /**
+     * 通过用户名查询用户
+     *
+     * @param username username
+     * @return com.gaotianchi.auth.entity.User
+     * @author gaotianchi
+     * @since 2024/11/24 12:35
+     **/
+    User queryByUsername(String username);
 
     /**
      * 通过ID查询单条数据

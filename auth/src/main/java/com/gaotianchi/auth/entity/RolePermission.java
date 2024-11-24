@@ -2,11 +2,11 @@ package com.gaotianchi.auth.entity;
 
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.io.Serializable;
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * 角色权限表(RolePermission)实体类

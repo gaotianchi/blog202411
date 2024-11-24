@@ -4,7 +4,6 @@ import com.gaotianchi.auth.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -16,6 +15,16 @@ import java.util.List;
  */
 @Mapper
 public interface UserDao {
+
+    /**
+     * 通过用户名查询单条数据
+     *
+     * @param username username
+     * @return com.gaotianchi.auth.entity.User
+     * @author gaotianchi
+     * @since 2024/11/24 12:39
+     **/
+    User queryByUsername(@Param("username") String username);
 
     /**
      * 通过ID查询单条数据

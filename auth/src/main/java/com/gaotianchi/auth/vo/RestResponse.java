@@ -23,12 +23,11 @@ public class RestResponse<T> implements Serializable {
     private Long timestamp;
 
     /**
-     *
+     * @param code    ...
+     * @param message ...
+     * @param data    ...
      * @author gaotianchi
      * @since 2024/11/23 19:14
-     * @param code ...
-     * @param message ...
-     * @param data ...
      **/
     public RestResponse(int code, String message, T data) {
         this.code = code;
@@ -38,35 +37,16 @@ public class RestResponse<T> implements Serializable {
     }
 
     /**
-     * success
-     * @author gaotianchi
-     * @since 2024/11/23 19:13
-     * @return com.gaotianchi.auth.vo.RestResponse<T>
-     **/
-    public static <T> RestResponse<T> success() {
-        return new RestResponse<T>(RestCode.SUCCESS.getCode(), RestCode.SUCCESS.getMessage(), null);
-    }
-
-    /**
-     * fail
-     * @author gaotianchi
-     * @since 2024/11/23 19:13
-     * @return com.gaotianchi.auth.vo.RestResponse<T>
-     **/
-    public static <T> RestResponse<T> fail() {
-        return new RestResponse<T>(RestCode.FAIL.getCode(), RestCode.FAIL.getMessage(), null);
-    }
-
-    /**
      * common restful response
-     * @author gaotianchi
-     * @since 2024/11/23 19:18
+     *
      * @param code response code
      * @param data response data
      * @return com.gaotianchi.auth.vo.RestResponse<T>
+     * @author gaotianchi
+     * @since 2024/11/23 19:18
      **/
     public static <T> RestResponse<T> response(int code, T data) {
-        return new RestResponse<T>(code, RestCode.fromCode(code).getMessage(), data);
+        return new RestResponse<>(code, RestCode.fromCode(code).getMessage(), data);
     }
 
 }

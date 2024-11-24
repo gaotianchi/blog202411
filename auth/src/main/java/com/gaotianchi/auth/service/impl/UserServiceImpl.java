@@ -1,12 +1,18 @@
 package com.gaotianchi.auth.service.impl;
 
+import com.gaotianchi.auth.dao.RolePermissionDao;
 import com.gaotianchi.auth.dao.UserDao;
 import com.gaotianchi.auth.entity.User;
 import com.gaotianchi.auth.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -19,9 +25,47 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final RolePermissionDao rolePermissionDao;
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, RolePermissionDao rolePermissionDao) {
         this.userDao = userDao;
+        this.rolePermissionDao = rolePermissionDao;
+    }
+
+    /**
+     * 根据用户名加载用户账户详情
+     *
+     * @param username username
+     * @return org.springframework.security.core.userdetails.UserDetails
+     * @author gaotianchi
+     * @since 2024/11/24 12:56
+     **/
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = queryByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        // 获取用户的角色以及权限
+        List<String> authorities = rolePermissionDao.queryUserPermissionNameAndRoleNameWithRolePrefixByUsername(username);
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                authorities.stream().map(SimpleGrantedAuthority::new).toList()
+        );
+    }
+
+    /**
+     * 通过 username 查询单条数据
+     *
+     * @param username username
+     * @return User 实例对象
+     */
+    @Override
+    public User queryByUsername(String username) {
+        return userDao.queryByUsername(username);
     }
 
     /**

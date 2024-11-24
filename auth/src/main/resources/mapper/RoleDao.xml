@@ -80,14 +80,14 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO role(code, name, description, created_at, updated_at)
-        VALUES (#{code}, #{name}, #{description}, #{createdAt}, #{updatedAt})
+        VALUES (#{code}, #{name}, #{description}, now(), now())
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO role(code, name, description, created_at, updated_at)
         VALUES
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.code}, #{entity.name}, #{entity.description}, #{entity.createdAt}, #{entity.updatedAt})
+            (#{entity.code}, #{entity.name}, #{entity.description}, now(), now())
         </foreach>
     </insert>
 
@@ -95,7 +95,7 @@
         INSERT INTO role(code, name, description, created_at, updated_at)
         VALUES
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.code}, #{entity.name}, #{entity.description}, #{entity.createdAt}, #{entity.updatedAt})
+            (#{entity.code}, #{entity.name}, #{entity.description}, now(), now())
         </foreach>
         ON DUPLICATE KEY UPDATE
         code = values(code),

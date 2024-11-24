@@ -14,14 +14,15 @@ public class GlobalExceptionHandler {
 
     /**
      * Global Exception handler
-     * @author gaotianchi
-     * @since 2024/11/23 19:32
+     *
      * @param e Exception
      * @return java.lang.Object
+     * @author gaotianchi
+     * @since 2024/11/23 19:32
      **/
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public RestResponse<String> exceptionHandler(Exception e){
+    public RestResponse<String> exceptionHandler(Exception e) {
         return RestResponse.response(500, e.getLocalizedMessage());
     }
 }

@@ -7,14 +7,6 @@
         <result property="roleCode" column="role_code" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="UserRoleMap">
-        SELECT user_id,
-               role_code
-        FROM user_role
-        WHERE user_id = #{userId}
-    </select>
-
     <!--查询指定行数据-->
     <select id="queryByPage" resultMap="UserRoleMap">
         SELECT
@@ -51,38 +43,6 @@
         VALUES (#{user_id}, #{role_code})
     </insert>
 
-<!--    <insert id="insertBatch">-->
-<!--        INSERT INTO user_role(user_id, role_code)-->
-<!--        VALUES-->
-<!--        <foreach collection="entities" item="entity" separator=",">-->
-<!--            (#{entity.user_id}, #{entity.role_code})-->
-<!--        </foreach>-->
-<!--    </insert>-->
-
-<!--    <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">-->
-<!--        INSERT INTO user_role(user_id, role_code)-->
-<!--        VALUES-->
-<!--        <foreach collection="entities" item="entity" separator=",">-->
-<!--            (#{entity.user_id}, #{entity.role_code})-->
-<!--        </foreach>-->
-<!--#         ON DUPLICATE KEY UPDATE-->
-
-<!--    </insert>-->
-
-    <!--通过主键修改数据-->
-<!--    <update id="update">-->
-<!--        UPDATE user_role-->
-<!--        <set>-->
-<!--        </set>-->
-<!--        WHERE user_id = #{userId}-->
-<!--    </update>-->
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        DELETE
-        FROM user_role
-        where user_id = #{userId}
-    </delete>
 
 </mapper>
 

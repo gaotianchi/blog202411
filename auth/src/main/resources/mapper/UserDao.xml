@@ -17,6 +17,23 @@
         <result property="isClosed" column="is_closed" jdbcType="INTEGER"/>
     </resultMap>
 
+    <select id="queryByUsername" resultMap="UserMap">
+        SELECT id,
+               username,
+               password,
+               email,
+               created_at,
+               updated_at,
+               last_login_time,
+               last_login_ip,
+               failed_attempts,
+               is_locked,
+               lock_expiration,
+               is_closed
+        FROM user
+        WHERE username = #{username}
+    </select>
+
     <!--查询单个-->
     <select id="queryById" resultMap="UserMap">
         SELECT id,

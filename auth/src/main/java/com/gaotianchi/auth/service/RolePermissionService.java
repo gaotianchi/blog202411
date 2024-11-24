@@ -13,14 +13,6 @@ import org.springframework.data.domain.PageRequest;
 public interface RolePermissionService {
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param roleCode 主键
-     * @return 实例对象
-     */
-    RolePermission queryById(Integer roleCode);
-
-    /**
      * 分页查询
      *
      * @param rolePermission 筛选条件
@@ -36,21 +28,4 @@ public interface RolePermissionService {
      * @return 实例对象
      */
     RolePermission insert(RolePermission rolePermission);
-
-    /**
-     * 修改数据
-     *
-     * @param rolePermission 实例对象
-     * @return 实例对象
-     */
-    RolePermission update(RolePermission rolePermission);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param roleCode 主键
-     * @return 是否成功
-     */
-    boolean deleteById(Integer roleCode);
-
 }

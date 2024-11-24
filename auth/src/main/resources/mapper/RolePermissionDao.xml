@@ -7,12 +7,27 @@
         <result property="permissionCode" column="permission_code" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="RolePermissionMap">
-        SELECT role_code,
-               permission_code
-        FROM role_permission
-        WHERE role_code = #{roleCode}
+    <!--根据用户名查询角色名称以及权限名称-->
+    <select id="queryUserPermissionNameAndRoleNameWithRolePrefixByUsername">
+        WITH user_roles AS (SELECT r.name AS role_name,
+                                   p.name AS permission_name
+                            FROM user u
+                                     INNER JOIN
+                                 user_role ur ON u.id = ur.user_id
+                                     INNER JOIN
+                                 role r ON ur.role_code = r.code
+                                     LEFT JOIN
+                                 role_permission rp ON r.code = rp.role_code
+                                     LEFT JOIN
+                                 permission p ON rp.permission_code = p.code
+                            WHERE u.username = #{username})
+        SELECT DISTINCT CONCAT('ROLE_', role_name) AS name
+        FROM user_roles
+
+        UNION
+
+        SELECT DISTINCT permission_name AS name
+        FROM user_roles
     </select>
 
     <!--查询指定行数据-->
@@ -44,45 +59,5 @@
             </if>
         </where>
     </select>
-
-    <!--新增所有列-->
-<!--    <insert id="insert" keyProperty="roleCode" useGeneratedKeys="true">-->
-<!--        INSERT INTO role_permission()-->
-<!--        VALUES ()-->
-<!--    </insert>-->
-
-<!--    <insert id="insertBatch" keyProperty="roleCode" useGeneratedKeys="true">-->
-<!--        INSERT INTO role_permission()-->
-<!--        VALUES-->
-<!--        <foreach collection="entities" item="entity" separator=",">-->
-<!--            ()-->
-<!--        </foreach>-->
-<!--    </insert>-->
-
-<!--    <insert id="insertOrUpdateBatch" keyProperty="roleCode" useGeneratedKeys="true">-->
-<!--        INSERT INTO role_permission()-->
-<!--        VALUES-->
-<!--        <foreach collection="entities" item="entity" separator=",">-->
-<!--            ()-->
-<!--        </foreach>-->
-<!--        ON DUPLICATE KEY UPDATE-->
-
-<!--    </insert>-->
-
-    <!--通过主键修改数据-->
-<!--    <update id="update">-->
-<!--        UPDATE role_permission-->
-<!--        <set>-->
-<!--        </set>-->
-<!--        WHERE role_code = #{roleCode}-->
-<!--    </update>-->
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        DELETE
-        FROM role_permission
-        where role_code = #{roleCode}
-    </delete>
-
 </mapper>
 

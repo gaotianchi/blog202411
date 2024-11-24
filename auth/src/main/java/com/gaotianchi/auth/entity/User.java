@@ -1,13 +1,12 @@
 package com.gaotianchi.auth.entity;
 
-import java.util.Date;
-
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.io.Serializable;
 import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用户表(User)实体类
@@ -35,7 +34,5 @@ public class User implements Serializable {
     private Integer isLocked;  // 是否锁定用户（0未锁定，1锁定）
     private Date lockExpiration;  // 账户锁定到期时间
     private Integer isClosed;  // 是否注销账户（0未注销，1已经注销）
-
-
 }
 

@@ -25,17 +25,6 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     }
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param roleCode 主键
-     * @return RolePermission 实例对象
-     */
-    @Override
-    public RolePermission queryById(Integer roleCode) {
-        return rolePermissionDao.queryById(roleCode);
-    }
-
-    /**
      * 分页查询
      *
      * @param rolePermission 筛选条件
@@ -58,28 +47,5 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     public RolePermission insert(RolePermission rolePermission) {
         rolePermissionDao.insert(rolePermission);
         return rolePermission;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param rolePermission 实例对象
-     * @return RolePermission 实例对象
-     */
-    @Override
-    public RolePermission update(RolePermission rolePermission) {
-        rolePermissionDao.update(rolePermission);
-        return queryById(rolePermission.getRoleCode());
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param roleCode 主键
-     * @return boolean 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer roleCode) {
-        return rolePermissionDao.deleteById(roleCode) > 0;
     }
 }

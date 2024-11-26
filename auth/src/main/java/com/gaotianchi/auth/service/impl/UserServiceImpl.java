@@ -44,17 +44,14 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = queryByUsername(username);
         if (user == null) {
+            System.out.println("user not found");
             throw new UsernameNotFoundException(username);
         }
 
-        // 获取用户的角色以及权限
+        // 获取用户的角色以及权限，例子：["ROLE_ADMIN", ANY]
         List<String> authorities = rolePermissionDao.queryUserPermissionNameAndRoleNameWithRolePrefixByUsername(username);
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                authorities.stream().map(SimpleGrantedAuthority::new).toList()
-        );
+        return UserDetailsImpl.builder().user(user).authorities(authorities.stream().map(SimpleGrantedAuthority::new).toList()).build();
     }
 
     /**

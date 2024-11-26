@@ -1,27 +1,25 @@
 package com.gaotianchi.auth.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
+
+import lombok.Data;
+import lombok.Builder;
+
+import java.io.Serializable;
+import java.io.Serial;
 
 /**
  * 用户行为日志(ActionLog)实体类
- *
  * @author gaotianchi
- * @since 2024-11-23 18:00:29
+ * @since 2024-11-24 20:26:27
  */
-@Setter
-@Getter
-@NoArgsConstructor
+@Data
+@Builder
 public class ActionLog implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -86918888593827507L;
-
+    private static final long serialVersionUID = -10177514253893939L;
+    
     private Integer id;  // 自增ID
     private Integer userId;  // 用户ID
     private String action;  // 操作类型
@@ -32,7 +30,5 @@ public class ActionLog implements Serializable {
     private String deviceInfo;  // 用户操作设备的信息
     private String details;  // 操作的详细细节
     private Date createdAt;  // 日志记录的创建时间
-
-
 }
 

@@ -21,12 +21,12 @@
                                      LEFT JOIN
                                  permission p ON rp.permission_code = p.code
                             WHERE u.username = #{username})
-        SELECT DISTINCT CONCAT('ROLE_', role_name) AS name
+        SELECT DISTINCT UPPER(CONCAT('ROLE_', role_name)) AS name
         FROM user_roles
 
         UNION
 
-        SELECT DISTINCT permission_name AS name
+        SELECT DISTINCT UPPER(permission_name) AS name
         FROM user_roles
     </select>
 

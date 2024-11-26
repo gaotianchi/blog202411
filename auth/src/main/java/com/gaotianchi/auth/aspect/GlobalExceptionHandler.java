@@ -1,6 +1,7 @@
 package com.gaotianchi.auth.aspect;
 
-import com.gaotianchi.auth.vo.RestResponse;
+import com.gaotianchi.auth.enums.RestCode;
+import com.gaotianchi.auth.vo.RestVO;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +23,7 @@ public class GlobalExceptionHandler {
      **/
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public RestResponse<String> exceptionHandler(Exception e) {
-        return RestResponse.response(500, e.getLocalizedMessage());
+    public RestVO<String> exceptionHandler(Exception e) {
+        return RestVO.response(RestCode.BAD_REQUEST, e.getLocalizedMessage());
     }
 }

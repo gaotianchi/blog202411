@@ -13,7 +13,7 @@ import java.io.Serializable;
  **/
 @Setter
 @Getter
-public class RestResponse<T> implements Serializable {
+public class RestVO<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -23,14 +23,14 @@ public class RestResponse<T> implements Serializable {
     private Long timestamp;
 
     /**
-     * @param code    ...
+     * @param restCode    ...
      * @param message ...
      * @param data    ...
      * @author gaotianchi
      * @since 2024/11/23 19:14
      **/
-    public RestResponse(int code, String message, T data) {
-        this.code = code;
+    public RestVO(RestCode restCode, String message, T data) {
+        this.code = restCode.getCode();
         this.message = message;
         this.data = data;
         this.timestamp = System.currentTimeMillis();
@@ -39,14 +39,14 @@ public class RestResponse<T> implements Serializable {
     /**
      * common restful response
      *
-     * @param code response code
+     * @param restCode response code
      * @param data response data
-     * @return com.gaotianchi.auth.vo.RestResponse<T>
+     * @return com.gaotianchi.auth.vo.RestVO<T>
      * @author gaotianchi
      * @since 2024/11/23 19:18
      **/
-    public static <T> RestResponse<T> response(int code, T data) {
-        return new RestResponse<>(code, RestCode.fromCode(code).getMessage(), data);
+    public static <T> RestVO<T> response(RestCode restCode, T data) {
+        return new RestVO<>(restCode, restCode.getMessage(), data);
     }
 
 }

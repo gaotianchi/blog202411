@@ -1,9 +1,7 @@
 package com.gaotianchi.auth.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.gaotianchi.auth.dto.CreateClientDto;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author gaotianchi
@@ -19,5 +17,10 @@ public class TestController {
             throw new RuntimeException("runtime exception");
         }
         return "test";
+    }
+
+    @PostMapping("/create-client")
+    public String createClient(@RequestBody CreateClientDto createClientDto) {
+        return "create-client";
     }
 }

@@ -1,27 +1,25 @@
 package com.gaotianchi.auth.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
+
+import lombok.Data;
+import lombok.Builder;
+
+import java.io.Serializable;
+import java.io.Serial;
 
 /**
  * 用户表(User)实体类
- *
  * @author gaotianchi
- * @since 2024-11-23 18:00:30
+ * @since 2024-11-24 20:26:27
  */
-@Setter
-@Getter
-@NoArgsConstructor
+@Data
+@Builder
 public class User implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -15525258711410910L;
-
+    private static final long serialVersionUID = 613972616653666707L;
+    
     private Integer id;  // 自增ID
     private String username;  // 用户名
     private String password;  // 用户密码
@@ -33,6 +31,6 @@ public class User implements Serializable {
     private Integer failedAttempts;  // 连续登录失败次数
     private Integer isLocked;  // 是否锁定用户（0未锁定，1锁定）
     private Date lockExpiration;  // 账户锁定到期时间
-    private Integer isClosed;  // 是否注销账户（0未注销，1已经注销）
+    private Integer isEnabled;  // 账户是否启用（0启用，1未启用）
 }
 

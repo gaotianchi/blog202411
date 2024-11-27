@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 权限表(Permission)表数据库访问层
  *
  * @author gaotianchi
- * @since 2024-11-27 21:32:50
+ * @since 2024-11-27 21:35:13
  */
 @Mapper
 public interface PermissionDao {
@@ -18,6 +18,6 @@ public interface PermissionDao {
 
     int update(Permission permission);
 
-    Permission queryById(Integer id);
+    Permission selectById(Integer id);
 }
 

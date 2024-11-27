@@ -62,7 +62,7 @@
         WHERE id = #{id}
     </update>
 
-    <select id="queryById" resultMap="ActionLogMap">
+    <select id="selectById" resultMap="ActionLogMap">
         SELECT id,
                user_id,
                action,

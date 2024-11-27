@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 角色权限表(RolePermission)表数据库访问层
  *
  * @author gaotianchi
- * @since 2024-11-27 21:32:50
+ * @since 2024-11-27 21:35:13
  */
 @Mapper
 public interface RolePermissionDao {
@@ -18,6 +18,6 @@ public interface RolePermissionDao {
 
     int update(RolePermission rolePermission);
 
-    RolePermission queryById(Integer id);
+    RolePermission selectById(Integer id);
 }
 

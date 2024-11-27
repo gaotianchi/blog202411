@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
  * (Client)表数据库访问层
  *
  * @author gaotianchi
- * @since 2024-11-27 21:32:50
+ * @since 2024-11-27 21:35:13
  */
 @Mapper
 public interface ClientDao {
@@ -18,6 +18,8 @@ public interface ClientDao {
 
     int update(Client client);
 
-    Client queryById(Integer id);
+    Client selectById(Integer id);
+
+    Client selectByClientIdOrClientName(String clientIdOrClientName);
 }
 

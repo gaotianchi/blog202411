@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 用户行为日志(ActionLog)表数据库访问层
  *
  * @author gaotianchi
- * @since 2024-11-27 21:32:50
+ * @since 2024-11-27 21:35:14
  */
 @Mapper
 public interface ActionLogDao {
@@ -18,6 +18,6 @@ public interface ActionLogDao {
 
     int update(ActionLog actionLog);
 
-    ActionLog queryById(Integer id);
+    ActionLog selectById(Integer id);
 }
 

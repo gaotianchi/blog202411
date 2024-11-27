@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 用户表(User)表数据库访问层
  *
  * @author gaotianchi
- * @since 2024-11-27 21:32:50
+ * @since 2024-11-27 21:35:13
  */
 @Mapper
 public interface UserDao {
@@ -18,6 +18,6 @@ public interface UserDao {
 
     int update(User user);
 
-    User queryById(Integer id);
+    User selectById(Integer id);
 }
 

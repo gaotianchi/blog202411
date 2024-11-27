@@ -44,7 +44,7 @@
         WHERE id = #{id}
     </update>
 
-    <select id="queryById" resultMap="RoleMap">
+    <select id="selectById" resultMap="RoleMap">
         SELECT id,
                code,
                name,

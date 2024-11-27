@@ -1,11 +1,11 @@
 package com.gaotianchi.auth.entity;
 
 
-import lombok.Data;
 import lombok.Builder;
+import lombok.Data;
 
-import java.io.Serializable;
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * (UserRole)实体类

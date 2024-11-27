@@ -30,5 +30,5 @@ public interface $!{tableName} {
 
     int update($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name}));
 
-    $!{tableInfo.name} queryById($!pk.shortType $!pk.name);
+    $!{tableInfo.name} selectById($!pk.shortType $!pk.name);
 }

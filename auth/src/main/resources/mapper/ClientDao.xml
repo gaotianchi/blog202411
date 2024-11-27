@@ -22,7 +22,7 @@
         INSERT INTO client(client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_name,
                            client_authentication_methods, authorization_grant_types, redirect_uris,
                            post_logout_redirect_uris, scopes, client_settings, token_settings)
-        VALUES (#{clientId}, #{clientIdIssuedAt}, #{clientSecret}, #{clientSecretExpiresAt}, #{clientName},
+        VALUES (#{clientId}, NOW(), #{clientSecret}, NOW(), #{clientName},
                 #{clientAuthenticationMethods}, #{authorizationGrantTypes}, #{redirectUris}, #{postLogoutRedirectUris},
                 #{scopes}, #{clientSettings}, #{tokenSettings})
     </insert>
@@ -76,7 +76,7 @@
         WHERE id = #{id}
     </update>
 
-    <select id="queryById" resultMap="ClientMap">
+    <select id="selectById" resultMap="ClientMap">
         SELECT id,
                client_id,
                client_id_issued_at,
@@ -92,6 +92,24 @@
                token_settings
         FROM client
         WHERE id = #{id}
+    </select>
+
+    <select id="selectByClientIdOrClientName">
+        SELECT id,
+               client_id,
+               client_id_issued_at,
+               client_secret,
+               client_secret_expires_at,
+               client_name,
+               client_authentication_methods,
+               authorization_grant_types,
+               redirect_uris,
+               post_logout_redirect_uris,
+               scopes,
+               client_settings,
+               token_settings
+        FROM client
+        WHERE client_id = #{clientIdOrClientName} OR client_name = #{clientIdOrClientName}
     </select>
 </mapper>
 

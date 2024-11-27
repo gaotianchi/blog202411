@@ -1,12 +1,11 @@
 package com.gaotianchi.auth.entity;
 
-import java.util.Date;
-
-import lombok.Data;
 import lombok.Builder;
+import lombok.Data;
 
-import java.io.Serializable;
 import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用户表(User)实体类

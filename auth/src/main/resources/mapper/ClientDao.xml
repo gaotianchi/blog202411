@@ -18,142 +18,6 @@
         <result property="postLogoutRedirectUris" column="post_logout_redirect_uris" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="selectById" resultMap="ClientMap">
-        SELECT id,
-               client_id,
-               client_id_issued_at,
-               client_name,
-               client_authentication_methods,
-               client_settings,
-               token_settings,
-               authorization_grant_types,
-               scopes,
-               redirect_uris,
-               client_secret,
-               client_secret_issued_at,
-               post_logout_redirect_uris
-        FROM client
-        WHERE id = #{id}
-    </select>
-
-    <select id="selectByClientId" resultMap="ClientMap">
-        SELECT id,
-               client_id,
-               client_id_issued_at,
-               client_name,
-               client_authentication_methods,
-               client_settings,
-               token_settings,
-               authorization_grant_types,
-               scopes,
-               redirect_uris,
-               client_secret,
-               client_secret_issued_at,
-               post_logout_redirect_uris
-        FROM client
-        WHERE client_id = #{clientId}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="selectByPage" resultMap="ClientMap">
-        SELECT
-        id, client_id, client_id_issued_at, client_name, client_authentication_methods, client_settings, token_settings,
-        authorization_grant_types, scopes, redirect_uris, client_secret, client_secret_issued_at,
-        post_logout_redirect_uris
-        FROM client
-        <where>
-            <if test="id != null">
-                AND id = #{id}
-            </if>
-            <if test="clientId != null and clientId != ''">
-                AND client_id = #{clientId}
-            </if>
-            <if test="clientIdIssuedAt != null">
-                AND client_id_issued_at = #{clientIdIssuedAt}
-            </if>
-            <if test="clientName != null and clientName != ''">
-                AND client_name = #{clientName}
-            </if>
-            <if test="clientAuthenticationMethods != null and clientAuthenticationMethods != ''">
-                AND client_authentication_methods = #{clientAuthenticationMethods}
-            </if>
-            <if test="clientSettings != null and clientSettings != ''">
-                AND client_settings = #{clientSettings}
-            </if>
-            <if test="tokenSettings != null and tokenSettings != ''">
-                AND token_settings = #{tokenSettings}
-            </if>
-            <if test="authorizationGrantTypes != null and authorizationGrantTypes != ''">
-                AND authorization_grant_types = #{authorizationGrantTypes}
-            </if>
-            <if test="scopes != null and scopes != ''">
-                AND scopes = #{scopes}
-            </if>
-            <if test="redirectUris != null and redirectUris != ''">
-                AND redirect_uris = #{redirectUris}
-            </if>
-            <if test="clientSecret != null and clientSecret != ''">
-                AND client_secret = #{clientSecret}
-            </if>
-            <if test="clientSecretIssuedAt != null">
-                AND client_secret_issued_at = #{clientSecretIssuedAt}
-            </if>
-            <if test="postLogoutRedirectUris != null and postLogoutRedirectUris != ''">
-                AND post_logout_redirect_uris = #{postLogoutRedirectUris}
-            </if>
-        </where>
-        LIMIT #{pageable.offset}, #{pageable.pageSize}
-    </select>
-
-    <!--统计总行数-->
-    <select id="count" resultType="java.lang.Long">
-        SELECT count(1)
-        FROM client
-        <where>
-            <if test="id != null">
-                AND id = #{id}
-            </if>
-            <if test="clientId != null and clientId != ''">
-                AND client_id = #{clientId}
-            </if>
-            <if test="clientIdIssuedAt != null">
-                AND client_id_issued_at = #{clientIdIssuedAt}
-            </if>
-            <if test="clientName != null and clientName != ''">
-                AND client_name = #{clientName}
-            </if>
-            <if test="clientAuthenticationMethods != null and clientAuthenticationMethods != ''">
-                AND client_authentication_methods = #{clientAuthenticationMethods}
-            </if>
-            <if test="clientSettings != null and clientSettings != ''">
-                AND client_settings = #{clientSettings}
-            </if>
-            <if test="tokenSettings != null and tokenSettings != ''">
-                AND token_settings = #{tokenSettings}
-            </if>
-            <if test="authorizationGrantTypes != null and authorizationGrantTypes != ''">
-                AND authorization_grant_types = #{authorizationGrantTypes}
-            </if>
-            <if test="scopes != null and scopes != ''">
-                AND scopes = #{scopes}
-            </if>
-            <if test="redirectUris != null and redirectUris != ''">
-                AND redirect_uris = #{redirectUris}
-            </if>
-            <if test="clientSecret != null and clientSecret != ''">
-                AND client_secret = #{clientSecret}
-            </if>
-            <if test="clientSecretIssuedAt != null">
-                AND client_secret_issued_at = #{clientSecretIssuedAt}
-            </if>
-            <if test="postLogoutRedirectUris != null and postLogoutRedirectUris != ''">
-                AND post_logout_redirect_uris = #{postLogoutRedirectUris}
-            </if>
-        </where>
-    </select>
-
-    <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO client(client_id, client_id_issued_at, client_name, client_authentication_methods, client_settings,
                            token_settings, authorization_grant_types, scopes, redirect_uris, client_secret,
@@ -163,46 +27,12 @@
                 #{clientSecretIssuedAt}, #{postLogoutRedirectUris})
     </insert>
 
-    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO client(client_id, client_id_issued_at, client_name, client_authentication_methods, client_settings,
-        token_settings, authorization_grant_types, scopes, redirect_uris, client_secret, client_secret_issued_at,
-        post_logout_redirect_uris)
-        VALUES
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.clientId}, #{entity.clientIdIssuedAt}, #{entity.clientName},
-            #{entity.clientAuthenticationMethods}, #{entity.clientSettings}, #{entity.tokenSettings},
-            #{entity.authorizationGrantTypes}, #{entity.scopes}, #{entity.redirectUris}, #{entity.clientSecret},
-            #{entity.clientSecretIssuedAt}, #{entity.postLogoutRedirectUris})
-        </foreach>
-    </insert>
+    <delete id="deleteById">
+        DELETE
+        FROM client
+        where id = #{id}
+    </delete>
 
-    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO client(client_id, client_id_issued_at, client_name, client_authentication_methods, client_settings,
-        token_settings, authorization_grant_types, scopes, redirect_uris, client_secret, client_secret_issued_at,
-        post_logout_redirect_uris)
-        VALUES
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.clientId}, #{entity.clientIdIssuedAt}, #{entity.clientName},
-            #{entity.clientAuthenticationMethods}, #{entity.clientSettings}, #{entity.tokenSettings},
-            #{entity.authorizationGrantTypes}, #{entity.scopes}, #{entity.redirectUris}, #{entity.clientSecret},
-            #{entity.clientSecretIssuedAt}, #{entity.postLogoutRedirectUris})
-        </foreach>
-        ON DUPLICATE KEY UPDATE
-        client_id = values(client_id),
-        client_id_issued_at = values(client_id_issued_at),
-        client_name = values(client_name),
-        client_authentication_methods = values(client_authentication_methods),
-        client_settings = values(client_settings),
-        token_settings = values(token_settings),
-        authorization_grant_types = values(authorization_grant_types),
-        scopes = values(scopes),
-        redirect_uris = values(redirect_uris),
-        client_secret = values(client_secret),
-        client_secret_issued_at = values(client_secret_issued_at),
-        post_logout_redirect_uris = values(post_logout_redirect_uris)
-    </insert>
-
-    <!--通过主键修改数据-->
     <update id="update">
         UPDATE client
         <set>
@@ -246,12 +76,40 @@
         WHERE id = #{id}
     </update>
 
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        DELETE
+    <select id="selectById" resultMap="ClientMap">
+        SELECT id,
+               client_id,
+               client_id_issued_at,
+               client_name,
+               client_authentication_methods,
+               client_settings,
+               token_settings,
+               authorization_grant_types,
+               scopes,
+               redirect_uris,
+               client_secret,
+               client_secret_issued_at,
+               post_logout_redirect_uris
         FROM client
-        where id = #{id}
-    </delete>
+        WHERE id = #{id}
+    </select>
 
+    <select id="selectByClientId" resultMap="ClientMap">
+        SELECT id,
+               client_id,
+               client_id_issued_at,
+               client_name,
+               client_authentication_methods,
+               client_settings,
+               token_settings,
+               authorization_grant_types,
+               scopes,
+               redirect_uris,
+               client_secret,
+               client_secret_issued_at,
+               post_logout_redirect_uris
+        FROM client
+        WHERE client_id = #{clientId}
+    </select>
 </mapper>
 

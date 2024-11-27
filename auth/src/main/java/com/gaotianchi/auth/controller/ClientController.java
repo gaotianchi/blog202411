@@ -3,10 +3,10 @@ package com.gaotianchi.auth.controller;
 
 import com.gaotianchi.auth.dto.CreateClientDto;
 import com.gaotianchi.auth.entity.Client;
-import com.gaotianchi.auth.enums.RestCode;
+import com.gaotianchi.auth.enums.Code;
 import com.gaotianchi.auth.service.ClientService;
 import com.gaotianchi.auth.vo.ClientVO;
-import com.gaotianchi.auth.vo.RestVO;
+import com.gaotianchi.auth.vo.VO;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -57,16 +57,16 @@ public class ClientController {
     }
 
     @PostMapping("create")
-    public RestVO<Void> create(@Valid @RequestBody CreateClientDto createClientDto) {
+    public VO<Void> create(@Valid @RequestBody CreateClientDto createClientDto) {
         log.info(createClientDto.toString());
 
         Client client = fromDtoToClient(createClientDto);
         clientService.insert(client);
-        return RestVO.response(RestCode.SUCCESS, null);
+        return VO.response(Code.SUCCESS, null);
     }
 
     @GetMapping("get")
-    public RestVO<ClientVO> getByClientId(@RequestParam String clientId) {
+    public VO<ClientVO> getByClientId(@RequestParam String clientId) {
         Client client = clientService.selectByClientId(clientId);
 
         ClientVO clientVO = ClientVO.builder()
@@ -81,6 +81,6 @@ public class ClientController {
                 .clientSettings(client.getClientSettings())
                 .authorizationGrantTypes(client.getAuthorizationGrantTypes())
                 .build();
-        return RestVO.response(RestCode.SUCCESS, clientVO);
+        return VO.response(Code.SUCCESS, clientVO);
     }
 }

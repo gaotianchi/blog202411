@@ -1,8 +1,8 @@
 package com.gaotianchi.auth.aspect;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gaotianchi.auth.enums.RestCode;
-import com.gaotianchi.auth.vo.RestVO;
+import com.gaotianchi.auth.enums.Code;
+import com.gaotianchi.auth.vo.VO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,7 +27,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
         log.warn("Access denied");
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        response.getWriter().write(objectMapper.writeValueAsString(RestVO.response(RestCode.ACCESS_DENIED, accessDeniedException.getMessage())));
+        response.getWriter().write(objectMapper.writeValueAsString(VO.response(Code.AUTH_ACCESS_DENIED, accessDeniedException.getMessage())));
         response.getWriter().flush();
     }
 }

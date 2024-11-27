@@ -2,12 +2,9 @@ package com.gaotianchi.auth.service.impl;
 
 import com.gaotianchi.auth.dao.ClientDao;
 import com.gaotianchi.auth.entity.Client;
-import com.gaotianchi.auth.enums.RestCode;
-import com.gaotianchi.auth.exception.SqlException;
+import com.gaotianchi.auth.enums.Code;
+import com.gaotianchi.auth.exception.SQLException;
 import com.gaotianchi.auth.service.ClientService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
@@ -102,18 +99,22 @@ public class ClientServiceImpl implements ClientService {
     public void insert(Client client) {
         int row = clientDao.insert(client);
         if (row != 1) {
-            throw new SqlException(RestCode.SQL_INSERT_ERROR);
+            throw new SQLException(Code.SQL_INSERT_ERROR);
         }
     }
 
     @Override
-    public boolean deleteById(Integer id) {
-        return clientDao.deleteById(id) == 1;
+    public void deleteById(Integer id) {
+        if (clientDao.deleteById(id) != 1) {
+            throw new SQLException(Code.SQL_DELETE_ERROR);
+        }
     }
 
     @Override
-    public boolean update(Client client) {
-        return clientDao.update(client) > 0;
+    public void update(Client client) {
+        if (clientDao.update(client) != 1) {
+            throw new SQLException(Code.SQL_UPDATE_ERROR);
+        }
     }
 
     @Override
@@ -124,12 +125,6 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client selectByClientId(String clientId) {
         return clientDao.selectByClientId(clientId);
-    }
-
-    @Override
-    public Page<Client> selectByPage(Client client, PageRequest pageRequest) {
-        long total = clientDao.count(client);
-        return new PageImpl<>(clientDao.selectByPage(client, pageRequest), pageRequest, total);
     }
 
     @Override

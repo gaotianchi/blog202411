@@ -57,6 +57,7 @@ public class ClientController {
     private ClientVO fromClientToClientVO(Client client) {
         return ClientVO.builder()
                 .id(client.getId())
+                .clientId(client.getClientId())
                 .clientName(client.getClientName())
                 .clientIdIssuedAt(client.getClientIdIssuedAt())
                 .clientAuthenticationMethods(StringUtils.commaDelimitedListToSet(client.getClientAuthenticationMethods()))
@@ -65,6 +66,7 @@ public class ClientController {
                 .redirectUris(StringUtils.commaDelimitedListToSet(client.getRedirectUris()))
                 .postLogoutRedirectUris(client.getPostLogoutRedirectUris())
                 .clientSettings(parseMap(client.getClientSettings()))
+                .clientSecretExpiresAt(client.getClientSecretExpiresAt())
                 .authorizationGrantTypes(StringUtils.commaDelimitedListToSet(client.getAuthorizationGrantTypes()))
                 .build();
     }

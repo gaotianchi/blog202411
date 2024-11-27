@@ -21,6 +21,6 @@ public class TestController {
 
     @PostMapping("/create-client")
     public String createClient(@RequestBody CreateClientDto createClientDto) {
-        return "create-client";
+        return "createClient-client";
     }
 }

@@ -1,6 +1,6 @@
 package com.gaotianchi.auth.config;
 
-import com.gaotianchi.auth.aspect.AccessDeniedHandler;
+import com.gaotianchi.auth.filter.AccessDeniedHandlerFilter;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -52,7 +52,7 @@ public class AuthorizationSecurityConfig {
 
     @Bean
     @Order(2)
-    public SecurityFilterChain webSecurityFilterConfig(HttpSecurity http, AccessDeniedHandler accessDeniedHandler) throws Exception {
+    public SecurityFilterChain webSecurityFilterConfig(HttpSecurity http, AccessDeniedHandlerFilter accessDeniedHandlerFilter) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/client/**").permitAll()
@@ -60,7 +60,7 @@ public class AuthorizationSecurityConfig {
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(e -> e
-                        .accessDeniedHandler(accessDeniedHandler))
+                        .accessDeniedHandler(accessDeniedHandlerFilter))
                 // Form login handles the redirect to the login page from the
                 // authorization server filter chain
                 .formLogin(Customizer.withDefaults());

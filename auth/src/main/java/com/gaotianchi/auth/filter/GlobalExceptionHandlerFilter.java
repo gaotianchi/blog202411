@@ -1,4 +1,4 @@
-package com.gaotianchi.auth.aspect;
+package com.gaotianchi.auth.filter;
 
 import com.gaotianchi.auth.enums.Code;
 import com.gaotianchi.auth.vo.VO;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since 2024/11/23 19:23
  **/
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandlerFilter {
 
     /**
      * Global Exception handler

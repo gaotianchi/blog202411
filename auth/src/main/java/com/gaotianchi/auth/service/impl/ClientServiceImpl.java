@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 import static com.gaotianchi.auth.utils.MapTool.parseMap;
 

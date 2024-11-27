@@ -1,4 +1,4 @@
-package com.gaotianchi.auth.aspect;
+package com.gaotianchi.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gaotianchi.auth.enums.Code;
@@ -6,8 +6,8 @@ import com.gaotianchi.auth.vo.VO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.io.IOException;
  * @since 2024/11/26 13:14
  **/
 @Component
-public class AccessDeniedHandler implements org.springframework.security.web.access.AccessDeniedHandler {
+public class AccessDeniedHandlerFilter implements AccessDeniedHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override

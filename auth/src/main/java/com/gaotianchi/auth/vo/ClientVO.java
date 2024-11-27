@@ -6,6 +6,8 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author gaotianchi
@@ -21,12 +23,12 @@ public class ClientVO implements Serializable {
     private String clientId;
     private Date clientIdIssuedAt;
     private String clientName;
-    private String clientAuthenticationMethods;
-    private String clientSettings;
-    private String tokenSettings;
-    private String authorizationGrantTypes;
-    private String scopes;
-    private String redirectUris;
+    private Set<String> clientAuthenticationMethods;
+    private Map<String, Object> clientSettings;
+    private Map<String, Object> tokenSettings;
+    private Set<String> authorizationGrantTypes;
+    private Set<String> scopes;
+    private Set<String> redirectUris;
     private Date clientSecretIssuedAt;
     private String postLogoutRedirectUris;
 }

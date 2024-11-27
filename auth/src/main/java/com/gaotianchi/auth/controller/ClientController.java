@@ -8,7 +8,7 @@ import com.gaotianchi.auth.service.ClientService;
 import com.gaotianchi.auth.vo.ClientVO;
 import com.gaotianchi.auth.vo.VO;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import static com.gaotianchi.auth.utils.MapTool.parseMap;
 import static com.gaotianchi.auth.utils.MapTool.writeMap;
 
 /**
@@ -25,7 +26,6 @@ import static com.gaotianchi.auth.utils.MapTool.writeMap;
  **/
 @RestController
 @RequestMapping("client")
-@Slf4j
 public class ClientController {
 
     private final ClientService clientService;
@@ -34,7 +34,7 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    public static Client fromDtoToClient(CreateClientDto createClientDto) {
+    private Client fromDtoToClient(CreateClientDto createClientDto) {
         List<String> clientAuthenticationMethods = new ArrayList<>(createClientDto.getClientAuthenticationMethods().size());
         clientAuthenticationMethods.addAll(createClientDto.getClientAuthenticationMethods());
 
@@ -56,30 +56,28 @@ public class ClientController {
                 .build();
     }
 
-    @PostMapping("create")
-    public VO<Void> create(@Valid @RequestBody CreateClientDto createClientDto) {
-        log.info(createClientDto.toString());
-
+    @PostMapping("new")
+    public VO<String> createClient(@Valid @RequestBody CreateClientDto createClientDto) {
         Client client = fromDtoToClient(createClientDto);
         clientService.insert(client);
-        return VO.response(Code.SUCCESS, null);
+        return VO.response(Code.SUCCESS, "/client/info/" + client.getClientId());
     }
 
-    @GetMapping("get")
-    public VO<ClientVO> getByClientId(@RequestParam String clientId) {
+    @GetMapping("info")
+    public VO<ClientVO> getInfoByClientId(@RequestParam @NotBlank(message = "客户端ID不能为空") String clientId) {
         Client client = clientService.selectByClientId(clientId);
 
         ClientVO clientVO = ClientVO.builder()
                 .id(client.getId())
                 .clientName(client.getClientName())
                 .clientIdIssuedAt(client.getClientIdIssuedAt())
-                .clientAuthenticationMethods(client.getClientAuthenticationMethods())
-                .tokenSettings(client.getTokenSettings())
-                .scopes(client.getScopes())
-                .redirectUris(client.getRedirectUris())
+                .clientAuthenticationMethods(StringUtils.commaDelimitedListToSet(client.getClientAuthenticationMethods()))
+                .tokenSettings(parseMap(client.getTokenSettings()))
+                .scopes(StringUtils.commaDelimitedListToSet(client.getScopes()))
+                .redirectUris(StringUtils.commaDelimitedListToSet(client.getRedirectUris()))
                 .postLogoutRedirectUris(client.getPostLogoutRedirectUris())
-                .clientSettings(client.getClientSettings())
-                .authorizationGrantTypes(client.getAuthorizationGrantTypes())
+                .clientSettings(parseMap(client.getClientSettings()))
+                .authorizationGrantTypes(StringUtils.commaDelimitedListToSet(client.getAuthorizationGrantTypes()))
                 .build();
         return VO.response(Code.SUCCESS, clientVO);
     }

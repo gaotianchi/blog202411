@@ -1,11 +1,7 @@
 package com.gaotianchi.auth.dao;
 
 import com.gaotianchi.auth.entity.Client;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 /**
  * 客户端表(Client)表数据库访问层

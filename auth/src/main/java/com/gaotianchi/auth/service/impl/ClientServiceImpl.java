@@ -142,5 +142,4 @@ public class ClientServiceImpl implements ClientService {
         Client client = selectByClientId(clientId);
         return fromClientToRegisteredClient(client);
     }
-
 }

@@ -1,6 +1,6 @@
 package com.gaotianchi.auth.config;
 
-import com.gaotianchi.auth.aspect.AccessDeniedHandlerImpl;
+import com.gaotianchi.auth.aspect.AccessDeniedHandler;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -20,9 +20,6 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -55,7 +52,7 @@ public class AuthorizationSecurityConfig {
 
     @Bean
     @Order(2)
-    public SecurityFilterChain webSecurityFilterConfig(HttpSecurity http, AccessDeniedHandlerImpl accessDeniedHandler) throws Exception {
+    public SecurityFilterChain webSecurityFilterConfig(HttpSecurity http, AccessDeniedHandler accessDeniedHandler) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/client/**").permitAll()

@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,13 +17,11 @@ import java.io.IOException;
  * @since 2024/11/26 13:14
  **/
 @Component
-@Slf4j
-public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
+public class AccessDeniedHandler implements org.springframework.security.web.access.AccessDeniedHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        log.warn("Access denied");
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.getWriter().write(objectMapper.writeValueAsString(VO.response(Code.AUTH_ACCESS_DENIED, accessDeniedException.getMessage())));

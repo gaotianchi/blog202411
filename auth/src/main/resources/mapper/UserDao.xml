@@ -17,116 +17,6 @@
         <result property="isEnabled" column="is_enabled" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="UserMap">
-        SELECT id,
-               username,
-               password,
-               email,
-               created_at,
-               updated_at,
-               last_login_time,
-               last_login_ip,
-               failed_attempts,
-               is_locked,
-               lock_expiration,
-               is_enabled
-        FROM user
-        WHERE id = #{id}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryByPage" resultMap="UserMap">
-        SELECT
-        id, username, password, email, created_at, updated_at, last_login_time, last_login_ip, failed_attempts,
-        is_locked, lock_expiration, is_enabled
-        FROM user
-        <where>
-            <if test="id != null">
-                AND id = #{id}
-            </if>
-            <if test="username != null and username != ''">
-                AND username = #{username}
-            </if>
-            <if test="password != null and password != ''">
-                AND password = #{password}
-            </if>
-            <if test="email != null and email != ''">
-                AND email = #{email}
-            </if>
-            <if test="createdAt != null">
-                AND created_at = #{createdAt}
-            </if>
-            <if test="updatedAt != null">
-                AND updated_at = #{updatedAt}
-            </if>
-            <if test="lastLoginTime != null">
-                AND last_login_time = #{lastLoginTime}
-            </if>
-            <if test="lastLoginIp != null and lastLoginIp != ''">
-                AND last_login_ip = #{lastLoginIp}
-            </if>
-            <if test="failedAttempts != null">
-                AND failed_attempts = #{failedAttempts}
-            </if>
-            <if test="isLocked != null">
-                AND is_locked = #{isLocked}
-            </if>
-            <if test="lockExpiration != null">
-                AND lock_expiration = #{lockExpiration}
-            </if>
-            <if test="isEnabled != null">
-                AND is_enabled = #{isEnabled}
-            </if>
-        </where>
-        LIMIT #{pageable.offset}, #{pageable.pageSize}
-    </select>
-
-    <!--统计总行数-->
-    <select id="count" resultType="java.lang.Long">
-        SELECT count(1)
-        FROM user
-        <where>
-            <if test="id != null">
-                AND id = #{id}
-            </if>
-            <if test="username != null and username != ''">
-                AND username = #{username}
-            </if>
-            <if test="password != null and password != ''">
-                AND password = #{password}
-            </if>
-            <if test="email != null and email != ''">
-                AND email = #{email}
-            </if>
-            <if test="createdAt != null">
-                AND created_at = #{createdAt}
-            </if>
-            <if test="updatedAt != null">
-                AND updated_at = #{updatedAt}
-            </if>
-            <if test="lastLoginTime != null">
-                AND last_login_time = #{lastLoginTime}
-            </if>
-            <if test="lastLoginIp != null and lastLoginIp != ''">
-                AND last_login_ip = #{lastLoginIp}
-            </if>
-            <if test="failedAttempts != null">
-                AND failed_attempts = #{failedAttempts}
-            </if>
-            <if test="isLocked != null">
-                AND is_locked = #{isLocked}
-            </if>
-            <if test="lockExpiration != null">
-                AND lock_expiration = #{lockExpiration}
-            </if>
-            <if test="isEnabled != null">
-                AND is_enabled = #{isEnabled}
-            </if>
-        </where>
-    </select>
-
-    <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO user(username, password, email, created_at, updated_at, last_login_time, last_login_ip,
                          failed_attempts, is_locked, lock_expiration, is_enabled)
@@ -134,41 +24,12 @@
                 #{failedAttempts}, #{isLocked}, #{lockExpiration}, #{isEnabled})
     </insert>
 
-    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO user(username, password, email, created_at, updated_at, last_login_time, last_login_ip,
-        failed_attempts, is_locked, lock_expiration, is_enabled)
-        VALUES
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.createdAt}, #{entity.updatedAt},
-            #{entity.lastLoginTime}, #{entity.lastLoginIp}, #{entity.failedAttempts}, #{entity.isLocked},
-            #{entity.lockExpiration}, #{entity.isEnabled})
-        </foreach>
-    </insert>
+    <delete id="deleteById">
+        DELETE
+        FROM user
+        where id = #{id}
+    </delete>
 
-    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO user(username, password, email, created_at, updated_at, last_login_time, last_login_ip,
-        failed_attempts, is_locked, lock_expiration, is_enabled)
-        VALUES
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.createdAt}, #{entity.updatedAt},
-            #{entity.lastLoginTime}, #{entity.lastLoginIp}, #{entity.failedAttempts}, #{entity.isLocked},
-            #{entity.lockExpiration}, #{entity.isEnabled})
-        </foreach>
-        ON DUPLICATE KEY UPDATE
-        username = values(username),
-        password = values(password),
-        email = values(email),
-        created_at = values(created_at),
-        updated_at = values(updated_at),
-        last_login_time = values(last_login_time),
-        last_login_ip = values(last_login_ip),
-        failed_attempts = values(failed_attempts),
-        is_locked = values(is_locked),
-        lock_expiration = values(lock_expiration),
-        is_enabled = values(is_enabled)
-    </insert>
-
-    <!--通过主键修改数据-->
     <update id="update">
         UPDATE user
         <set>
@@ -209,12 +70,21 @@
         WHERE id = #{id}
     </update>
 
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        DELETE
+    <select id="queryById" resultMap="UserMap">
+        SELECT id,
+               username,
+               password,
+               email,
+               created_at,
+               updated_at,
+               last_login_time,
+               last_login_ip,
+               failed_attempts,
+               is_locked,
+               lock_expiration,
+               is_enabled
         FROM user
-        where id = #{id}
-    </delete>
-
+        WHERE id = #{id}
+    </select>
 </mapper>
 

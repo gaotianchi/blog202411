@@ -22,9 +22,6 @@ public class CreateClientDto {
     @Size(max = 255, message = "客户端ID长度不能超过255")
     private String clientId;
 
-    @NotNull(message = "客户端ID发布时间不能为空")
-    private Date clientIdIssuedAt;
-
     @NotBlank(message = "客户端名称不能为空")
     @Size(max = 255, message = "客户端名称长度不能超过255")
     private String clientName;
@@ -49,8 +46,6 @@ public class CreateClientDto {
 
     @Size(max = 255, message = "客户端密钥长度不能超过255")
     private String clientSecret;
-
-    private Date clientSecretIssuedAt;
 
     @Size(max = 1000, message = "注销后重定向URI列表长度不能超过1000")
     private Set<@NotBlank(message = "注销后重定向URI不能为空") String> postLogoutRedirectUris;

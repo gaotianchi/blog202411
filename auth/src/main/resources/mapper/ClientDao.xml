@@ -6,25 +6,25 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="clientId" column="client_id" jdbcType="VARCHAR"/>
         <result property="clientIdIssuedAt" column="client_id_issued_at" jdbcType="TIMESTAMP"/>
+        <result property="clientSecret" column="client_secret" jdbcType="VARCHAR"/>
+        <result property="clientSecretExpiresAt" column="client_secret_expires_at" jdbcType="TIMESTAMP"/>
         <result property="clientName" column="client_name" jdbcType="VARCHAR"/>
         <result property="clientAuthenticationMethods" column="client_authentication_methods" jdbcType="VARCHAR"/>
+        <result property="authorizationGrantTypes" column="authorization_grant_types" jdbcType="VARCHAR"/>
+        <result property="redirectUris" column="redirect_uris" jdbcType="VARCHAR"/>
+        <result property="postLogoutRedirectUris" column="post_logout_redirect_uris" jdbcType="VARCHAR"/>
+        <result property="scopes" column="scopes" jdbcType="VARCHAR"/>
         <result property="clientSettings" column="client_settings" jdbcType="VARCHAR"/>
         <result property="tokenSettings" column="token_settings" jdbcType="VARCHAR"/>
-        <result property="authorizationGrantTypes" column="authorization_grant_types" jdbcType="VARCHAR"/>
-        <result property="scopes" column="scopes" jdbcType="VARCHAR"/>
-        <result property="redirectUris" column="redirect_uris" jdbcType="VARCHAR"/>
-        <result property="clientSecret" column="client_secret" jdbcType="VARCHAR"/>
-        <result property="clientSecretIssuedAt" column="client_secret_issued_at" jdbcType="TIMESTAMP"/>
-        <result property="postLogoutRedirectUris" column="post_logout_redirect_uris" jdbcType="VARCHAR"/>
     </resultMap>
 
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO client(client_id, client_id_issued_at, client_name, client_authentication_methods, client_settings,
-                           token_settings, authorization_grant_types, scopes, redirect_uris, client_secret,
-                           client_secret_issued_at, post_logout_redirect_uris)
-        VALUES (#{clientId}, #{clientIdIssuedAt}, #{clientName}, #{clientAuthenticationMethods}, #{clientSettings},
-                #{tokenSettings}, #{authorizationGrantTypes}, #{scopes}, #{redirectUris}, #{clientSecret},
-                #{clientSecretIssuedAt}, #{postLogoutRedirectUris})
+        INSERT INTO client(client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_name,
+                           client_authentication_methods, authorization_grant_types, redirect_uris,
+                           post_logout_redirect_uris, scopes, client_settings, token_settings)
+        VALUES (#{clientId}, #{clientIdIssuedAt}, #{clientSecret}, #{clientSecretExpiresAt}, #{clientName},
+                #{clientAuthenticationMethods}, #{authorizationGrantTypes}, #{redirectUris}, #{postLogoutRedirectUris},
+                #{scopes}, #{clientSettings}, #{tokenSettings})
     </insert>
 
     <delete id="deleteById">
@@ -42,11 +42,29 @@
             <if test="clientIdIssuedAt != null">
                 client_id_issued_at = #{clientIdIssuedAt},
             </if>
+            <if test="clientSecret != null and clientSecret != ''">
+                client_secret = #{clientSecret},
+            </if>
+            <if test="clientSecretExpiresAt != null">
+                client_secret_expires_at = #{clientSecretExpiresAt},
+            </if>
             <if test="clientName != null and clientName != ''">
                 client_name = #{clientName},
             </if>
             <if test="clientAuthenticationMethods != null and clientAuthenticationMethods != ''">
                 client_authentication_methods = #{clientAuthenticationMethods},
+            </if>
+            <if test="authorizationGrantTypes != null and authorizationGrantTypes != ''">
+                authorization_grant_types = #{authorizationGrantTypes},
+            </if>
+            <if test="redirectUris != null and redirectUris != ''">
+                redirect_uris = #{redirectUris},
+            </if>
+            <if test="postLogoutRedirectUris != null and postLogoutRedirectUris != ''">
+                post_logout_redirect_uris = #{postLogoutRedirectUris},
+            </if>
+            <if test="scopes != null and scopes != ''">
+                scopes = #{scopes},
             </if>
             <if test="clientSettings != null and clientSettings != ''">
                 client_settings = #{clientSettings},
@@ -54,62 +72,26 @@
             <if test="tokenSettings != null and tokenSettings != ''">
                 token_settings = #{tokenSettings},
             </if>
-            <if test="authorizationGrantTypes != null and authorizationGrantTypes != ''">
-                authorization_grant_types = #{authorizationGrantTypes},
-            </if>
-            <if test="scopes != null and scopes != ''">
-                scopes = #{scopes},
-            </if>
-            <if test="redirectUris != null and redirectUris != ''">
-                redirect_uris = #{redirectUris},
-            </if>
-            <if test="clientSecret != null and clientSecret != ''">
-                client_secret = #{clientSecret},
-            </if>
-            <if test="clientSecretIssuedAt != null">
-                client_secret_issued_at = #{clientSecretIssuedAt},
-            </if>
-            <if test="postLogoutRedirectUris != null and postLogoutRedirectUris != ''">
-                post_logout_redirect_uris = #{postLogoutRedirectUris},
-            </if>
         </set>
         WHERE id = #{id}
     </update>
 
-    <select id="selectById" resultMap="ClientMap">
+    <select id="queryById" resultMap="ClientMap">
         SELECT id,
                client_id,
                client_id_issued_at,
+               client_secret,
+               client_secret_expires_at,
                client_name,
                client_authentication_methods,
-               client_settings,
-               token_settings,
                authorization_grant_types,
-               scopes,
                redirect_uris,
-               client_secret,
-               client_secret_issued_at,
-               post_logout_redirect_uris
+               post_logout_redirect_uris,
+               scopes,
+               client_settings,
+               token_settings
         FROM client
         WHERE id = #{id}
-    </select>
-
-    <select id="selectByClientIdOrClientName" resultMap="ClientMap">
-        SELECT id,
-               client_id,
-               client_id_issued_at,
-               client_name,
-               client_authentication_methods,
-               client_settings,
-               token_settings,
-               authorization_grant_types,
-               scopes,
-               redirect_uris,
-               client_secret,
-               client_secret_issued_at,
-               post_logout_redirect_uris
-        FROM client
-        WHERE client_id = #{clientIdOrClientName} OR client_name = #{clientIdOrClientName}
     </select>
 </mapper>
 

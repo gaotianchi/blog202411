@@ -3,61 +3,41 @@
 <mapper namespace="com.gaotianchi.auth.dao.RolePermissionDao">
 
     <resultMap type="com.gaotianchi.auth.entity.RolePermission" id="RolePermissionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="roleCode" column="role_code" jdbcType="INTEGER"/>
         <result property="permissionCode" column="permission_code" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--根据用户名查询角色名称以及权限名称-->
-    <select id="queryUserPermissionNameAndRoleNameWithRolePrefixByUsername">
-        WITH user_roles AS (SELECT r.name AS role_name,
-                                   p.name AS permission_name
-                            FROM user u
-                                     INNER JOIN
-                                 user_role ur ON u.id = ur.user_id
-                                     INNER JOIN
-                                 role r ON ur.role_code = r.code
-                                     LEFT JOIN
-                                 role_permission rp ON r.code = rp.role_code
-                                     LEFT JOIN
-                                 permission p ON rp.permission_code = p.code
-                            WHERE u.username = #{username})
-        SELECT DISTINCT UPPER(CONCAT('ROLE_', role_name)) AS name
-        FROM user_roles
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO role_permission(role_code, permission_code)
+        VALUES (#{roleCode}, #{permissionCode})
+    </insert>
 
-        UNION
-
-        SELECT DISTINCT UPPER(permission_name) AS name
-        FROM user_roles
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryByPage" resultMap="RolePermissionMap">
-        SELECT
-        role_code, permission_code
+    <delete id="deleteById">
+        DELETE
         FROM role_permission
-        <where>
+        where id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE role_permission
+        <set>
             <if test="roleCode != null">
-                AND role_code = #{roleCode}
+                role_code = #{roleCode},
             </if>
             <if test="permissionCode != null">
-                AND permission_code = #{permissionCode}
+                permission_code = #{permissionCode},
             </if>
-        </where>
-        LIMIT #{pageable.offset}, #{pageable.pageSize}
-    </select>
+        </set>
+        WHERE id = #{id}
+    </update>
 
-    <!--统计总行数-->
-    <select id="count" resultType="java.lang.Long">
-        SELECT count(1)
+    <select id="queryById" resultMap="RolePermissionMap">
+        SELECT id,
+               role_code,
+               permission_code
         FROM role_permission
-        <where>
-            <if test="roleCode != null">
-                AND role_code = #{roleCode}
-            </if>
-            <if test="permissionCode != null">
-                AND permission_code = #{permissionCode}
-            </if>
-        </where>
+        WHERE id = #{id}
     </select>
 </mapper>
 

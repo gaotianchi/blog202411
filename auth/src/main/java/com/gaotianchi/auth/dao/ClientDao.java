@@ -4,10 +4,10 @@ import com.gaotianchi.auth.entity.Client;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 客户端表(Client)表数据库访问层
+ * (Client)表数据库访问层
  *
  * @author gaotianchi
- * @since 2024-11-25 13:13:05
+ * @since 2024-11-27 21:32:50
  */
 @Mapper
 public interface ClientDao {
@@ -18,8 +18,6 @@ public interface ClientDao {
 
     int update(Client client);
 
-    Client selectById(Integer id);
-
-    Client selectByClientIdOrClientName(String clientIdOrClientName);
+    Client queryById(Integer id);
 }
 

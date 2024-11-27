@@ -46,7 +46,6 @@ public class ClientController {
                 .clientId(createClientDto.getClientId())
                 .clientSecret(createClientDto.getClientSecret())
                 .clientName(createClientDto.getClientName())
-                .clientIdIssuedAt(Date.from(Objects.requireNonNull(createClientDto.getClientIdIssuedAt()).toInstant()))
                 .clientAuthenticationMethods(StringUtils.collectionToCommaDelimitedString(clientAuthenticationMethods))
                 .authorizationGrantTypes(StringUtils.collectionToCommaDelimitedString(authorizationGrantTypes))
                 .redirectUris(StringUtils.collectionToCommaDelimitedString(createClientDto.getRedirectUris()))

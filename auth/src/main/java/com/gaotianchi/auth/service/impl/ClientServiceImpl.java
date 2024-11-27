@@ -124,11 +124,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client selectByClientId(String clientId) {
-        return clientDao.selectByClientId(clientId);
-    }
-
-    @Override
     public void save(RegisteredClient registeredClient) {
     }
 
@@ -140,7 +135,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public RegisteredClient findByClientId(String clientId) {
-        Client client = selectByClientId(clientId);
+        Client client = clientDao.selectByClientIdOrClientName(clientId);
         return fromClientToRegisteredClient(client);
     }
 }

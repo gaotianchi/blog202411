@@ -18,6 +18,4 @@ public interface ClientService extends RegisteredClientRepository {
     void update(Client client);
 
     Client selectById(Integer id);
-
-    Client selectByClientId(String clientId);
 }

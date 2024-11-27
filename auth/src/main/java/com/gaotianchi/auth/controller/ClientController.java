@@ -56,18 +56,8 @@ public class ClientController {
                 .build();
     }
 
-    @PostMapping("new")
-    public VO<String> createClient(@Valid @RequestBody CreateClientDto createClientDto) {
-        Client client = fromDtoToClient(createClientDto);
-        clientService.insert(client);
-        return VO.response(Code.SUCCESS, "/client/info/" + client.getClientId());
-    }
-
-    @GetMapping("info")
-    public VO<ClientVO> getInfoByClientId(@RequestParam @NotBlank(message = "客户端ID不能为空") String clientId) {
-        Client client = clientService.selectByClientId(clientId);
-
-        ClientVO clientVO = ClientVO.builder()
+    private ClientVO fromClientToClientVO(Client client) {
+        return ClientVO.builder()
                 .id(client.getId())
                 .clientName(client.getClientName())
                 .clientIdIssuedAt(client.getClientIdIssuedAt())
@@ -79,6 +69,20 @@ public class ClientController {
                 .clientSettings(parseMap(client.getClientSettings()))
                 .authorizationGrantTypes(StringUtils.commaDelimitedListToSet(client.getAuthorizationGrantTypes()))
                 .build();
+    }
+
+    @PostMapping("new")
+    public VO<String> createClient(@Valid @RequestBody CreateClientDto createClientDto) {
+        Client client = fromDtoToClient(createClientDto);
+        clientService.insert(client);
+        return VO.response(Code.SUCCESS, "/client/info/" + client.getClientId());
+    }
+
+    @GetMapping("info")
+    public VO<ClientVO> getInfoById(@RequestParam @NotBlank(message = "客户端ID不能为空") Integer id) {
+        Client client = clientService.selectById(id);
+
+        ClientVO clientVO = fromClientToClientVO(client);
         return VO.response(Code.SUCCESS, clientVO);
     }
 }

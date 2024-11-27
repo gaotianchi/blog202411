@@ -20,6 +20,6 @@ public interface ClientDao {
 
     Client selectById(Integer id);
 
-    Client selectByClientId(String clientId);
+    Client selectByClientIdOrClientName(String clientIdOrClientName);
 }
 

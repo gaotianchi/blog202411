@@ -25,13 +25,6 @@ public class $!{tableInfo.name} implements Serializable {
     private static final long serialVersionUID = $!tool.serial();
 
     #foreach($column in $tableInfo.fullColumn)
-
         private $!{tool.getClsNameByFullName($column.type)} $!{column.name};  #if(${column.comment})// ${column.comment}#end
     #end
-
-##    #foreach($column in $tableInfo.fullColumn)
-##        ##使用宏定义实现get,set方法
-##        #getSetMethod($column)
-##    #end
-
 }

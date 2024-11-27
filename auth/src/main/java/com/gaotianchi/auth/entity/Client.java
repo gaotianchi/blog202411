@@ -2,24 +2,24 @@ package com.gaotianchi.auth.entity;
 
 import java.util.Date;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
 
-import java.io.Serial;
 import java.io.Serializable;
+import java.io.Serial;
 
 /**
  * (Client)实体类
  *
  * @author gaotianchi
- * @since 2024-11-27 18:31:00
+ * @since 2024-11-27 21:01:31
  */
 @Data
 @Builder
 public class Client implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -79066551719035182L;
+    private static final long serialVersionUID = 269572350292701620L;
 
     private Integer id;
     private String clientId;

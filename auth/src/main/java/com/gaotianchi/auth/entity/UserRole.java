@@ -1,25 +1,26 @@
 package com.gaotianchi.auth.entity;
 
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
 
-import java.io.Serial;
 import java.io.Serializable;
+import java.io.Serial;
 
 /**
- * 用户角色关联表(UserRole)实体类
+ * (UserRole)实体类
  *
  * @author gaotianchi
- * @since 2024-11-24 20:26:27
+ * @since 2024-11-27 21:01:30
  */
 @Data
 @Builder
 public class UserRole implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -36562653974590927L;
+    private static final long serialVersionUID = -84758873007088946L;
 
+    private Integer id;
     private Integer userId;  // 用户id
     private Integer roleCode;  // 角色代码
 }

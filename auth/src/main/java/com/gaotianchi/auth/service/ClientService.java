@@ -4,10 +4,10 @@ import com.gaotianchi.auth.entity.Client;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 
 /**
- * 客户端表(Client)表服务接口
+ * (Client)表服务接口
  *
  * @author gaotianchi
- * @since 2024-11-24 20:35:24
+ * @since 2024-11-28 20:19:44
  */
 public interface ClientService extends RegisteredClientRepository {
 
@@ -17,5 +17,5 @@ public interface ClientService extends RegisteredClientRepository {
 
     void update(Client client);
 
-    Client selectById(Integer id);
+    Client findById(Integer id);
 }

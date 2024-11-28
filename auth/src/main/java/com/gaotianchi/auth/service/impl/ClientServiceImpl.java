@@ -119,7 +119,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client selectById(Integer id) {
+    public Client findById(Integer id) {
         return clientDao.selectById(id);
     }
 
@@ -129,7 +129,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public RegisteredClient findById(String id) {
-        Client client = selectById(Integer.valueOf(id));
+        Client client = findById(Integer.valueOf(id));
         return fromClientToRegisteredClient(client);
     }
 

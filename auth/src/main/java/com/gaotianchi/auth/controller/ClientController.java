@@ -71,14 +71,14 @@ public class ClientController {
                 .build();
     }
 
-    @PostMapping("new")
+    @PostMapping("")
     public VO<String> createClient(@Valid @RequestBody CreateClientDto createClientDto) {
         Client client = fromDtoToClient(createClientDto);
         clientService.insert(client);
         return VO.response(Code.SUCCESS, "/client/info/" + client.getId());
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("{id}")
     public VO<Void> deleteClientById(@PathVariable
                                      @NotNull(message = "id 不能为空")
                                      @Min(value = 1, message = "id 必须大于等于 1") Integer id) {
@@ -90,7 +90,7 @@ public class ClientController {
     public VO<ClientVO> getInfoById(@PathVariable
                                     @NotNull(message = "id 不能为空")
                                     @Min(value = 1, message = "id 必须大于等于 1") Integer id) {
-        Client client = clientService.selectById(id);
+        Client client = clientService.findById(id);
 
         ClientVO clientVO = fromClientToClientVO(client);
         return VO.response(Code.SUCCESS, clientVO);

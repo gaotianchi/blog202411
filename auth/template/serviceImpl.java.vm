@@ -1,0 +1,62 @@
+##定义初始变量
+#set($tableName = $tool.append($tableInfo.name, "ServiceImpl"))
+##设置回调
+$!callback.setFileName($tool.append($tableName, ".java"))
+$!callback.setSavePath($tool.append($tableInfo.savePath, "/service/impl"))
+
+##拿到主键
+#if(!$tableInfo.pkColumn.isEmpty())
+    #set($pk = $tableInfo.pkColumn.get(0))
+#end
+
+#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}service.impl;
+
+import $!{tableInfo.savePackageName}.entity.$!{tableInfo.name};
+import $!{tableInfo.savePackageName}.dao.$!{tableInfo.name}Dao;
+import $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;
+import org.springframework.stereotype.Service;
+import com.gaotianchi.auth.enums.Code;
+import com.gaotianchi.auth.exception.SQLException;
+
+
+/**
+ * $!{tableInfo.comment}($!{tableInfo.name})表服务实现类
+ *
+ * @author $!author
+ * @since $!time.currTime()
+ */
+@Service("$!tool.firstLowerCase($!{tableInfo.name})Service")
+public class $!{tableName} implements $!{tableInfo.name}Service {
+
+    private final $!{tableInfo.name}Dao $!tool.firstLowerCase($!{tableInfo.name})Dao;
+
+    public $!{tableName}($!{tableInfo.name}Dao $!tool.firstLowerCase($!{tableInfo.name})Dao) {
+        this.$!tool.firstLowerCase($!{tableInfo.name})Dao = $!tool.firstLowerCase($!{tableInfo.name})Dao;
+    }
+
+    @Override
+    public void insert($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name})) {
+        if ($!tool.firstLowerCase($!{tableInfo.name})Dao.insert($!tool.firstLowerCase($!{tableInfo.name})) != 1) {
+            throw new SQLException(Code.SQL_INSERT_ERROR);
+        }
+    }
+
+    @Override
+    public void deleteById($!pk.shortType $!pk.name) {
+        if ($!tool.firstLowerCase($!{tableInfo.name})Dao.deleteById($!pk.name) != 1) {
+            throw new SQLException(Code.SQL_DELETE_ERROR);
+        }
+    }
+
+    @Override
+    public void update($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name})) {
+        if ($!tool.firstLowerCase($!{tableInfo.name})Dao.update($!tool.firstLowerCase($!{tableInfo.name})) != 1) {
+            throw new SQLException(Code.SQL_UPDATE_ERROR);
+        }
+    }
+
+    @Override
+    public $!{tableInfo.name} findById($!pk.shortType $!pk.name) {
+        return $!tool.firstLowerCase($!{tableInfo.name})Dao.selectById($!pk.name);
+    }
+}

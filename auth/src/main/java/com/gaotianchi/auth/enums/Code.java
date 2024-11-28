@@ -30,7 +30,7 @@ public enum Code {
     NETWORK_TIMEOUT(3001, "Network timeout."),
     NETWORK_UNAVAILABLE(3002, "Network unavailable."),
 
-    // TODO: 业务逻辑模块
+    // 业务逻辑模块
     INVALID_PARAMETER(4001, "Invalid parameter."),
 
     // TODO: 第三方服务

@@ -24,7 +24,7 @@ import static com.gaotianchi.auth.utils.MapTool.writeMap;
  * @since 2024/11/26 12:51
  **/
 @RestController
-@RequestMapping("client")
+@RequestMapping("client" )
 public class ClientController {
 
     private final ClientService clientService;
@@ -71,25 +71,25 @@ public class ClientController {
                 .build();
     }
 
-    @PostMapping("")
+    @PostMapping("" )
     public VO<String> createClient(@Valid @RequestBody CreateClientDto createClientDto) {
         Client client = fromDtoToClient(createClientDto);
         clientService.insert(client);
         return VO.response(Code.SUCCESS, "/client/info/" + client.getId());
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{id}" )
     public VO<Void> deleteClientById(@PathVariable
-                                     @NotNull(message = "id 不能为空")
-                                     @Min(value = 1, message = "id 必须大于等于 1") Integer id) {
+                                     @NotNull(message = "id 不能为空" )
+                                     @Min(value = 1, message = "id 必须大于等于 1" ) Integer id) {
         clientService.deleteById(id);
         return VO.response(Code.SUCCESS, null);
     }
 
-    @GetMapping("info/{id}")
+    @GetMapping("info/{id}" )
     public VO<ClientVO> getInfoById(@PathVariable
-                                    @NotNull(message = "id 不能为空")
-                                    @Min(value = 1, message = "id 必须大于等于 1") Integer id) {
+                                    @NotNull(message = "id 不能为空" )
+                                    @Min(value = 1, message = "id 必须大于等于 1" ) Integer id) {
         Client client = clientService.findById(id);
 
         ClientVO clientVO = fromClientToClientVO(client);

@@ -1,11 +1,22 @@
 package com.gaotianchi.auth.service.impl;
 
-import com.gaotianchi.auth.entity.User;
 import com.gaotianchi.auth.dao.UserDao;
-import com.gaotianchi.auth.service.UserService;
-import org.springframework.stereotype.Service;
+import com.gaotianchi.auth.entity.User;
 import com.gaotianchi.auth.enums.Code;
 import com.gaotianchi.auth.exception.SQLException;
+import com.gaotianchi.auth.service.UserService;
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -47,5 +58,42 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Integer id) {
         return userDao.selectById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDao.selectByUsernameOrEmail(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        Set<String> grantedAuthoritiesNames = userDao.selectUserRolesAndPermissionsNamesByUsername(username);
+        Set<GrantedAuthority> grantedAuthorities = grantedAuthoritiesNames.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+        return UserDetailsImpl.builder()
+                .authorities(grantedAuthorities)
+                .user(user)
+                .build();
+    }
+
+    @Builder
+    @Data
+    private static class UserDetailsImpl implements UserDetails {
+
+        private User user;
+        private Collection<? extends GrantedAuthority> authorities;
+
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            return authorities;
+        }
+
+        @Override
+        public String getPassword() {
+            return user.getPassword();
+        }
+
+        @Override
+        public String getUsername() {
+            return user.getUsername();
+        }
     }
 }

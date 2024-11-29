@@ -26,13 +26,13 @@ import static com.gaotianchi.auth.utils.MapTool.parseMap;
  * @author gaotianchi
  * @since 2024-11-24 20:35:24
  */
-@Service("clientService")
+@Service("clientService" )
 public class ClientServiceImpl implements ClientService {
 
     private final ClientDao clientDao;
 
     public ClientServiceImpl(ClientDao clientDao) {
-        Assert.notNull(clientDao, "clientRepository cannot be null");
+        Assert.notNull(clientDao, "clientRepository cannot be null" );
         this.clientDao = clientDao;
     }
 
@@ -130,7 +130,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public RegisteredClient findById(String id) {
         Client client = findById(Integer.valueOf(id));
-        return fromClientToRegisteredClient(client);
+        RegisteredClient registeredClient = fromClientToRegisteredClient(client);
+        return registeredClient;
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.gaotianchi.auth.service.impl;
 
-import com.gaotianchi.auth.entity.Permission;
 import com.gaotianchi.auth.dao.PermissionDao;
-import com.gaotianchi.auth.service.PermissionService;
-import org.springframework.stereotype.Service;
+import com.gaotianchi.auth.entity.Permission;
 import com.gaotianchi.auth.enums.Code;
 import com.gaotianchi.auth.exception.SQLException;
+import com.gaotianchi.auth.service.PermissionService;
+import org.springframework.stereotype.Service;
 
 
 /**

@@ -52,7 +52,7 @@ public class AuthorizationSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
+                        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login" )))
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
@@ -62,7 +62,7 @@ public class AuthorizationSecurityConfig {
     public SecurityFilterChain webSecurityFilterConfig(HttpSecurity http, AccessDeniedHandlerFilter accessDeniedHandlerFilter) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/client/**").permitAll()
+                        .requestMatchers("/client/**" ).permitAll()
                         .requestMatchers("/test/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -78,7 +78,7 @@ public class AuthorizationSecurityConfig {
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder()
-                .issuer("http://localhost:8080")
+                .issuer("http://localhost:8080" )
                 .build();
     }
 
@@ -89,7 +89,7 @@ public class AuthorizationSecurityConfig {
                 context.getClaims().claims((claims) -> {
                     Set<String> roles = AuthorityUtils.authorityListToSet(context.getPrincipal().getAuthorities())
                             .stream()
-                            .map(c -> c.replaceFirst("^ROLE_", ""))
+                            .map(c -> c.replaceFirst("^ROLE_", "" ))
                             .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
                     claims.put("roles", roles);
                 });
@@ -131,7 +131,7 @@ public class AuthorizationSecurityConfig {
         static KeyPair generateRsaKey() {
             KeyPair keyPair;
             try {
-                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA" );
                 keyPairGenerator.initialize(2048);
                 keyPair = keyPairGenerator.generateKeyPair();
             } catch (Exception ex) {

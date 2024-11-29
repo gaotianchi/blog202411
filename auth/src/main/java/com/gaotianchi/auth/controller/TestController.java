@@ -1,6 +1,10 @@
 package com.gaotianchi.auth.controller;
 
-import com.gaotianchi.auth.dto.CreateClientDto;
+
+import com.gaotianchi.auth.enums.Code;
+import com.gaotianchi.auth.vo.VO;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -11,16 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("test")
 public class TestController {
 
-    @GetMapping("/{a}")
-    public String test(@PathVariable String a) {
-        if (a != null && !a.isEmpty()) {
-            throw new RuntimeException("runtime exception");
-        }
-        return "test";
-    }
-
-    @PostMapping("/create-client")
-    public String createClient(@RequestBody CreateClientDto createClientDto) {
-        return "createClient-client";
+    @GetMapping("{param}")
+    public VO<String> test(@PathVariable @NotBlank(message = "参数不能为空") @NotNull String param) {
+        return VO.response(Code.SUCCESS, "Hello " + param);
     }
 }

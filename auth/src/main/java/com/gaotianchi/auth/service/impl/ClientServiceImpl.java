@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.Set;
 
@@ -71,7 +72,7 @@ public class ClientServiceImpl implements ClientService {
         Set<String> postLogoutRedirectUris = StringUtils.commaDelimitedListToSet(
                 client.getPostLogoutRedirectUris());
 
-        RegisteredClient.Builder builder = RegisteredClient.withId(client.getClientId())
+        return RegisteredClient.withId(client.getClientId())
                 .id(client.getId().toString())
                 .clientId(client.getClientId())
                 .clientSecret(client.getClientSecret())
@@ -85,15 +86,17 @@ public class ClientServiceImpl implements ClientService {
                                 grantTypes.add(resolveAuthorizationGrantType(grantType))))
                 .redirectUris((uris) -> uris.addAll(redirectUris))
                 .scopes((scopes) -> scopes.addAll(clientScopes))
-                .postLogoutRedirectUris((uris) -> uris.addAll(postLogoutRedirectUris));
-
-        Map<String, Object> clientSettingsMap = parseMap(client.getClientSettings());
-        builder.clientSettings(ClientSettings.withSettings(clientSettingsMap).build());
-
-        Map<String, Object> tokenSettingsMap = parseMap(client.getTokenSettings());
-        builder.tokenSettings(TokenSettings.withSettings(tokenSettingsMap).build());
-
-        return builder.build();
+                .postLogoutRedirectUris((uris) -> uris.addAll(postLogoutRedirectUris))
+                .clientSettings(ClientSettings.builder()
+                        .requireProofKey(true)
+                        .requireAuthorizationConsent(false)
+                        .build())
+                .tokenSettings(TokenSettings.builder()
+                        .accessTokenTimeToLive(Duration.ofMinutes(10))
+                        .refreshTokenTimeToLive(Duration.ofDays(30))
+                        .reuseRefreshTokens(false)
+                        .build())
+                .build();
     }
 
     @Override
@@ -130,8 +133,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public RegisteredClient findById(String id) {
         Client client = findById(Integer.valueOf(id));
-        RegisteredClient registeredClient = fromClientToRegisteredClient(client);
-        return registeredClient;
+        return fromClientToRegisteredClient(client);
     }
 
     @Override

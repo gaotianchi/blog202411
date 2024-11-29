@@ -48,8 +48,6 @@ public class ClientController {
                 .authorizationGrantTypes(StringUtils.collectionToCommaDelimitedString(authorizationGrantTypes))
                 .redirectUris(StringUtils.collectionToCommaDelimitedString(createClientDto.getRedirectUris()))
                 .scopes(StringUtils.collectionToCommaDelimitedString(createClientDto.getScopes()))
-                .clientSettings(writeMap(createClientDto.getClientSettings()))
-                .tokenSettings(writeMap(createClientDto.getTokenSettings()))
                 .postLogoutRedirectUris(StringUtils.collectionToCommaDelimitedString(createClientDto.getPostLogoutRedirectUris()))
                 .build();
     }
@@ -61,11 +59,9 @@ public class ClientController {
                 .clientName(client.getClientName())
                 .clientIdIssuedAt(client.getClientIdIssuedAt())
                 .clientAuthenticationMethods(StringUtils.commaDelimitedListToSet(client.getClientAuthenticationMethods()))
-                .tokenSettings(parseMap(client.getTokenSettings()))
                 .scopes(StringUtils.commaDelimitedListToSet(client.getScopes()))
                 .redirectUris(StringUtils.commaDelimitedListToSet(client.getRedirectUris()))
                 .postLogoutRedirectUris(client.getPostLogoutRedirectUris())
-                .clientSettings(parseMap(client.getClientSettings()))
                 .clientSecretExpiresAt(client.getClientSecretExpiresAt())
                 .authorizationGrantTypes(StringUtils.commaDelimitedListToSet(client.getAuthorizationGrantTypes()))
                 .build();

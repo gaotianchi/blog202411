@@ -28,12 +28,6 @@ public class CreateClientDto {
     @NotNull(message = "客户端认证方式不能为空" )
     private Set<@NotBlank(message = "认证方式不能为空" ) String> clientAuthenticationMethods;
 
-    @NotNull(message = "客户端设置不能为空" )
-    private Map<@NotBlank(message = "设置键不能为空" ) String, Object> clientSettings;
-
-    @NotNull(message = "令牌设置不能为空" )
-    private Map<@NotBlank(message = "设置键不能为空" ) String, Object> tokenSettings;
-
     @NotNull(message = "授权类型不能为空" )
     private Set<@NotBlank(message = "授权类型不能为空" ) String> authorizationGrantTypes;
 

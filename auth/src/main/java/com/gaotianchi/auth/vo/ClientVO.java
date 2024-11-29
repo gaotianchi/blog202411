@@ -24,8 +24,6 @@ public class ClientVO implements Serializable {
     private Date clientIdIssuedAt;
     private String clientName;
     private Set<String> clientAuthenticationMethods;
-    private Map<String, Object> clientSettings;
-    private Map<String, Object> tokenSettings;
     private Set<String> authorizationGrantTypes;
     private Set<String> scopes;
     private Set<String> redirectUris;

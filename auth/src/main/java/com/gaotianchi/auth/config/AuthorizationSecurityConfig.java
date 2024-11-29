@@ -20,6 +20,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
@@ -62,6 +63,7 @@ public class AuthorizationSecurityConfig {
     public SecurityFilterChain webSecurityFilterConfig(HttpSecurity http, AccessDeniedHandlerFilter accessDeniedHandlerFilter) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("*/info/**").permitAll()
                         .requestMatchers("/client/**" ).permitAll()
                         .requestMatchers("/test/**").permitAll()
                         .anyRequest().authenticated()

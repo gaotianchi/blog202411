@@ -1,12 +1,13 @@
 package com.gaotianchi.auth.controller;
 
 import com.gaotianchi.auth.entity.User;
+import com.gaotianchi.auth.enums.Code;
 import com.gaotianchi.auth.service.UserService;
+import com.gaotianchi.auth.vo.UserVo;
 import com.gaotianchi.auth.vo.VO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author gaotianchi
@@ -22,8 +23,21 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("")
-    public VO<String> addUser() {
-        return null;
+    private UserVo toUserVo(User user) {
+        return UserVo.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
+    @GetMapping("info/{id}")
+    public VO<UserVo> getInfoById(@PathVariable @NotNull(message = "id 不能为空" ) @Min(value = 1, message = "id 必须大于等于 1" ) Integer id) {
+        User user = userService.findById(id);
+
+        UserVo userVo = toUserVo(user);
+        return VO.response(Code.SUCCESS, userVo);
     }
 }

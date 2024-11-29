@@ -95,5 +95,21 @@ public class UserServiceImpl implements UserService {
         public String getUsername() {
             return user.getUsername();
         }
+
+
+        @Override
+        public boolean isAccountNonLocked() {
+            return user.getIsLocked() == 0;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return UserDetails.super.isCredentialsNonExpired();
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return UserDetails.super.isEnabled();
+        }
     }
 }

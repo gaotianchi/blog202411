@@ -96,6 +96,10 @@ public class UserServiceImpl implements UserService {
             return user.getUsername();
         }
 
+        @Override
+        public boolean isAccountNonExpired() {
+            return UserDetails.super.isAccountNonExpired();
+        }
 
         @Override
         public boolean isAccountNonLocked() {

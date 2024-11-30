@@ -64,6 +64,7 @@ public class AuthorizationSecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("*/info/**").permitAll()
                         .requestMatchers("/client/**").permitAll()
+                        .requestMatchers("/test/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

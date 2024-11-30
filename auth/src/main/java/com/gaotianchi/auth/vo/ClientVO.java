@@ -22,11 +22,17 @@ public class ClientVO implements Serializable {
     private Integer id;
     private String clientId;
     private Date clientIdIssuedAt;
-    private String clientName;
-    private Set<String> clientAuthenticationMethods;
-    private Set<String> authorizationGrantTypes;
-    private Set<String> scopes;
-    private Set<String> redirectUris;
+    private String clientSecret;
     private Date clientSecretExpiresAt;
-    private String postLogoutRedirectUris;
+    private String clientName;
+    private Set<String>  authorizationGrantTypes;
+    private Set<String>  redirectUris;
+    private Set<String>  postLogoutRedirectUris;
+    private Set<String>  scopes;
+    private Set<String> clientAuthenticationMethods;
+    private Integer requireProofKey;
+    private Integer requireAuthorizationConsent;
+    private Integer accessTokenTimeLive;
+    private Integer refreshTokenTimeToLive;
+    private Integer reuseRefreshTokens;
 }

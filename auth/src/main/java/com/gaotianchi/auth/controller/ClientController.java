@@ -1,7 +1,8 @@
 package com.gaotianchi.auth.controller;
 
 
-import com.gaotianchi.auth.dto.CreateClientDto;
+import com.gaotianchi.auth.converter.ClientConverter;
+import com.gaotianchi.auth.dto.ClientDto;
 import com.gaotianchi.auth.entity.Client;
 import com.gaotianchi.auth.enums.Code;
 import com.gaotianchi.auth.service.ClientService;
@@ -17,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.gaotianchi.auth.utils.MapTool.writeMap;
-
 /**
  * @author gaotianchi
  * @since 2024/11/26 12:51
@@ -29,69 +28,30 @@ public class ClientController {
 
     private final ClientService clientService;
 
-    public ClientController(ClientService clientService) {
+    private final ClientConverter clientConverter;
+
+    public ClientController(ClientService clientService, ClientConverter clientConverter) {
         this.clientService = clientService;
-    }
-
-    private Client toClient(CreateClientDto createClientDto) {
-        List<String> clientAuthenticationMethods = new ArrayList<>(createClientDto.getClientAuthenticationMethods().size());
-        clientAuthenticationMethods.addAll(createClientDto.getClientAuthenticationMethods());
-
-        List<String> authorizationGrantTypes = new ArrayList<>(createClientDto.getAuthorizationGrantTypes().size());
-        authorizationGrantTypes.addAll(createClientDto.getAuthorizationGrantTypes());
-
-        return Client.builder()
-                .clientId(createClientDto.getClientId())
-                .clientIdIssuedAt(new Date())
-                .clientSecret(createClientDto.getClientSecret())
-                .clientName(createClientDto.getClientName())
-                .clientSettings(writeMap(createClientDto.getClientSettings()))
-                .tokenSettings(writeMap(createClientDto.getTokenSettings()))
-                .clientAuthenticationMethods(StringUtils.collectionToCommaDelimitedString(clientAuthenticationMethods))
-                .authorizationGrantTypes(StringUtils.collectionToCommaDelimitedString(authorizationGrantTypes))
-                .redirectUris(StringUtils.collectionToCommaDelimitedString(createClientDto.getRedirectUris()))
-                .scopes(StringUtils.collectionToCommaDelimitedString(createClientDto.getScopes()))
-                .postLogoutRedirectUris(StringUtils.collectionToCommaDelimitedString(createClientDto.getPostLogoutRedirectUris()))
-                .build();
-    }
-
-    private ClientVO toClientVO(Client client) {
-        return ClientVO.builder()
-                .id(client.getId())
-                .clientId(client.getClientId())
-                .clientName(client.getClientName())
-                .clientIdIssuedAt(client.getClientIdIssuedAt())
-                .clientAuthenticationMethods(StringUtils.commaDelimitedListToSet(client.getClientAuthenticationMethods()))
-                .scopes(StringUtils.commaDelimitedListToSet(client.getScopes()))
-                .redirectUris(StringUtils.commaDelimitedListToSet(client.getRedirectUris()))
-                .postLogoutRedirectUris(client.getPostLogoutRedirectUris())
-                .clientSecretExpiresAt(client.getClientSecretExpiresAt())
-                .authorizationGrantTypes(StringUtils.commaDelimitedListToSet(client.getAuthorizationGrantTypes()))
-                .build();
+        this.clientConverter = clientConverter;
     }
 
     @PostMapping("" )
-    public VO<String> createClient(@Valid @RequestBody CreateClientDto createClientDto) {
-        Client client = toClient(createClientDto);
+    public VO<String> createClient(@Valid @RequestBody ClientDto clientDto) {
+        Client client = clientConverter.toEntity(clientDto);
         clientService.insert(client);
         return VO.response(Code.SUCCESS, "/client/info/" + client.getId());
     }
 
     @DeleteMapping("{id}" )
-    public VO<Void> deleteClientById(@PathVariable
-                                     @NotNull(message = "id 不能为空" )
-                                     @Min(value = 1, message = "id 必须大于等于 1" ) Integer id) {
+    public VO<Void> deleteClientById(@PathVariable @NotNull(message = "id 不能为空" ) @Min(value = 1, message = "id 必须大于等于 1" ) Integer id) {
         clientService.deleteById(id);
         return VO.response(Code.SUCCESS, null);
     }
 
     @GetMapping("info/{id}" )
-    public VO<ClientVO> getInfoById(@PathVariable
-                                    @NotNull(message = "id 不能为空" )
-                                    @Min(value = 1, message = "id 必须大于等于 1" ) Integer id) {
+    public VO<ClientVO> getInfoById(@PathVariable @NotNull(message = "id 不能为空" ) @Min(value = 1, message = "id 必须大于等于 1" ) Integer id) {
         Client client = clientService.findById(id);
-
-        ClientVO clientVO = toClientVO(client);
+        ClientVO clientVO = clientConverter.toVO(client);
         return VO.response(Code.SUCCESS, clientVO);
     }
 }

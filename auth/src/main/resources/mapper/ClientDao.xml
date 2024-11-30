@@ -14,17 +14,22 @@
         <result property="postLogoutRedirectUris" column="post_logout_redirect_uris" jdbcType="VARCHAR"/>
         <result property="scopes" column="scopes" jdbcType="VARCHAR"/>
         <result property="clientAuthenticationMethods" column="client_authentication_methods" jdbcType="VARCHAR"/>
-        <result property="clientSettings" column="client_settings" jdbcType="VARCHAR"/>
-        <result property="tokenSettings" column="token_settings" jdbcType="VARCHAR"/>
+        <result property="requireProofKey" column="require_proof_key" jdbcType="INTEGER"/>
+        <result property="requireAuthorizationConsent" column="require_authorization_consent" jdbcType="INTEGER"/>
+        <result property="accessTokenTimeLive" column="access_token_time_live" jdbcType="INTEGER"/>
+        <result property="refreshTokenTimeToLive" column="refresh_token_time_to_live" jdbcType="INTEGER"/>
+        <result property="reuseRefreshTokens" column="reuse_refresh_tokens" jdbcType="INTEGER"/>
     </resultMap>
 
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO client(client_id, client_id_issued_at, client_secret, client_secret_expires_at, client_name,
                            authorization_grant_types, redirect_uris, post_logout_redirect_uris, scopes,
-                           client_authentication_methods, client_settings, token_settings)
+                           client_authentication_methods, require_proof_key, require_authorization_consent,
+                           access_token_time_live, refresh_token_time_to_live, reuse_refresh_tokens)
         VALUES (#{clientId}, #{clientIdIssuedAt}, #{clientSecret}, #{clientSecretExpiresAt}, #{clientName},
                 #{authorizationGrantTypes}, #{redirectUris}, #{postLogoutRedirectUris}, #{scopes},
-                #{clientAuthenticationMethods}, #{clientSettings}, #{tokenSettings})
+                #{clientAuthenticationMethods}, #{requireProofKey}, #{requireAuthorizationConsent},
+                #{accessTokenTimeLive}, #{refreshTokenTimeToLive}, #{reuseRefreshTokens})
     </insert>
 
     <delete id="deleteById">
@@ -66,11 +71,20 @@
             <if test="clientAuthenticationMethods != null and clientAuthenticationMethods != ''">
                 client_authentication_methods = #{clientAuthenticationMethods},
             </if>
-            <if test="clientSettings != null and clientSettings != ''">
-                client_settings = #{clientSettings},
+            <if test="requireProofKey != null">
+                require_proof_key = #{requireProofKey},
             </if>
-            <if test="tokenSettings != null and tokenSettings != ''">
-                token_settings = #{tokenSettings},
+            <if test="requireAuthorizationConsent != null">
+                require_authorization_consent = #{requireAuthorizationConsent},
+            </if>
+            <if test="accessTokenTimeLive != null">
+                access_token_time_live = #{accessTokenTimeLive},
+            </if>
+            <if test="refreshTokenTimeToLive != null">
+                refresh_token_time_to_live = #{refreshTokenTimeToLive},
+            </if>
+            <if test="reuseRefreshTokens != null">
+                reuse_refresh_tokens = #{reuseRefreshTokens},
             </if>
         </set>
         WHERE id = #{id}
@@ -88,8 +102,11 @@
                post_logout_redirect_uris,
                scopes,
                client_authentication_methods,
-               client_settings,
-               token_settings
+               require_proof_key,
+               require_authorization_consent,
+               access_token_time_live,
+               refresh_token_time_to_live,
+               reuse_refresh_tokens
         FROM client
         WHERE id = #{id}
     </select>
@@ -106,8 +123,11 @@
                post_logout_redirect_uris,
                scopes,
                client_authentication_methods,
-               client_settings,
-               token_settings
+               require_proof_key,
+               require_authorization_consent,
+               access_token_time_live,
+               refresh_token_time_to_live,
+               reuse_refresh_tokens
         FROM client
         WHERE client_id = #{clientIdOrClientName} OR client_name = #{clientIdOrClientName}
     </select>

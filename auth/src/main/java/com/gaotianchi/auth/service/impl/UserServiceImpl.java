@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
 
         @Override
         public boolean isEnabled() {
-            return user.getIsEnabled() == 0;
+            return user.getIsEnabled() == 1;
         }
     }
 }

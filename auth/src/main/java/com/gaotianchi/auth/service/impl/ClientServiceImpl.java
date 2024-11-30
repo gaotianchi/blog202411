@@ -15,10 +15,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.time.Duration;
-import java.util.Map;
 import java.util.Set;
-
-import static com.gaotianchi.auth.utils.MapTool.parseMap;
 
 
 /**
@@ -87,14 +84,15 @@ public class ClientServiceImpl implements ClientService {
                 .redirectUris((uris) -> uris.addAll(redirectUris))
                 .scopes((scopes) -> scopes.addAll(clientScopes))
                 .postLogoutRedirectUris((uris) -> uris.addAll(postLogoutRedirectUris))
-                .clientSettings(ClientSettings.builder().requireProofKey(true).build())
-                .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofHours(1)).refreshTokenTimeToLive(Duration.ofDays(30)).build());
-
-//        Map<String, Object> clientSettingsMap = parseMap(client.getClientSettings());
-//        builder.clientSettings(ClientSettings.withSettings(clientSettingsMap).build());
-
-//        Map<String, Object> tokenSettingsMap = parseMap(client.getTokenSettings());
-//        builder.tokenSettings(TokenSettings.withSettings(tokenSettingsMap).build());
+                .clientSettings(ClientSettings.builder()
+                        .requireProofKey(true)
+                        .requireAuthorizationConsent(false)
+                        .build())
+                .tokenSettings(TokenSettings.builder()
+                        .accessTokenTimeToLive(Duration.ofHours(1))
+                        .refreshTokenTimeToLive(Duration.ofDays(30))
+                        .reuseRefreshTokens(false)
+                        .build());
 
         return builder.build();
     }

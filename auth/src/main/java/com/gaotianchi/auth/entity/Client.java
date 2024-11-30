@@ -12,14 +12,14 @@ import java.io.Serial;
  * (Client)实体类
  *
  * @author gaotianchi
- * @since 2024-11-29 22:57:15
+ * @since 2024-11-30 19:25:56
  */
 @Data
 @Builder
 public class Client implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 694016498266826851L;
+    private static final long serialVersionUID = -67741514635894671L;
 
     private Integer id;
     private String clientId;
@@ -32,7 +32,10 @@ public class Client implements Serializable {
     private String postLogoutRedirectUris;
     private String scopes;
     private String clientAuthenticationMethods;
-    private String clientSettings;
-    private String tokenSettings;
+    private Integer requireProofKey;
+    private Integer requireAuthorizationConsent;
+    private Integer accessTokenTimeLive;
+    private Integer refreshTokenTimeToLive;
+    private Integer reuseRefreshTokens;
 }
 

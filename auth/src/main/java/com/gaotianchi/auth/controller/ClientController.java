@@ -31,16 +31,23 @@ public class ClientController {
     }
 
     @PostMapping("")
-    public VO<String> createClient(@Valid @RequestBody ClientDto clientDto) {
+    public VO<String> insert(@Valid @RequestBody ClientDto clientDto) {
         Client client = clientConverter.toEntity(clientDto);
         clientService.insert(client);
         return VO.response(Code.SUCCESS, "/client/info/" + client.getId());
     }
 
     @DeleteMapping("{id}")
-    public VO<Void> deleteClientById(@PathVariable @NotNull(message = "id 不能为空") @Min(value = 1, message = "id 必须大于等于 1") Integer id) {
+    public VO<Void> deleteById(@PathVariable @NotNull(message = "id 不能为空") @Min(value = 1, message = "id 必须大于等于 1") Integer id) {
         clientService.deleteById(id);
         return VO.response(Code.SUCCESS, null);
+    }
+
+    @PutMapping("")
+    public VO<String> update(@Valid @RequestBody ClientDto clientDto) {
+        Client client = clientConverter.toEntity(clientDto);
+        clientService.update(client);
+        return VO.response(Code.SUCCESS, "/client/info/" + client.getId());
     }
 
     @GetMapping("info/{id}")

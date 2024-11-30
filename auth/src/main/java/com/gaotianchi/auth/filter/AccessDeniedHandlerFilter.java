@@ -22,7 +22,7 @@ public class AccessDeniedHandlerFilter implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        response.setContentType("application/json" );
+        response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.getWriter().write(objectMapper.writeValueAsString(VO.response(Code.AUTH_ACCESS_DENIED, accessDeniedException.getMessage())));
         response.getWriter().flush();

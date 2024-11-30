@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author gaotianchi
  * @since 2024-11-28 20:45:39
  */
-@Service("actionLogService" )
+@Service("actionLogService")
 public class ActionLogServiceImpl implements ActionLogService {
 
     private final ActionLogDao actionLogDao;

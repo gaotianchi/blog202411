@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author gaotianchi
  * @since 2024-11-28 20:45:38
  */
-@Service("userRoleService" )
+@Service("userRoleService")
 public class UserRoleServiceImpl implements UserRoleService {
 
     private final UserRoleDao userRoleDao;

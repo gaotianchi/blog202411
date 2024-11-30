@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @author gaotianchi
  * @since 2024-11-28 20:45:39
  */
-@Service("userService" )
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;

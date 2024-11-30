@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author gaotianchi
  * @since 2024-11-28 20:45:39
  */
-@Service("rolePermissionService" )
+@Service("rolePermissionService")
 public class RolePermissionServiceImpl implements RolePermissionService {
 
     private final RolePermissionDao rolePermissionDao;

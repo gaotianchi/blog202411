@@ -7,7 +7,10 @@ import com.gaotianchi.auth.vo.UserVo;
 import com.gaotianchi.auth.vo.VO;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author gaotianchi
@@ -34,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("info/{id}")
-    public VO<UserVo> getInfoById(@PathVariable @NotNull(message = "id 不能为空" ) @Min(value = 1, message = "id 必须大于等于 1" ) Integer id) {
+    public VO<UserVo> getInfoById(@PathVariable @NotNull(message = "id 不能为空") @Min(value = 1, message = "id 必须大于等于 1") Integer id) {
         User user = userService.findById(id);
 
         UserVo userVo = toUserVo(user);

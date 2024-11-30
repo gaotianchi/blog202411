@@ -3,7 +3,6 @@ package com.gaotianchi.auth.dao;
 import com.gaotianchi.auth.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
 import java.util.Set;
 
 /**

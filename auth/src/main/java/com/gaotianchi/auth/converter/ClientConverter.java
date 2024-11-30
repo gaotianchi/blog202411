@@ -5,7 +5,6 @@ import com.gaotianchi.auth.entity.Client;
 import com.gaotianchi.auth.vo.ClientVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -19,7 +18,7 @@ import java.util.Set;
 public interface ClientConverter {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "clientAuthenticationMethods", expression = "java(setToString(clientDto.getClientAuthenticationMethods))")
+    @Mapping(target = "clientAuthenticationMethods", expression = "java(setToString(clientDto.getClientAuthenticationMethods()))")
     @Mapping(target = "authorizationGrantTypes", expression = "java(setToString(clientDto.getAuthorizationGrantTypes()))")
     @Mapping(target = "scopes", expression = "java(setToString(clientDto.getScopes()))")
     @Mapping(target = "redirectUris", expression = "java(setToString(clientDto.getRedirectUris()))")
@@ -27,7 +26,7 @@ public interface ClientConverter {
     Client toEntity(ClientDto clientDto);
 
 
-    @Mapping(target = "clientAuthenticationMethods", expression = "java(stringToSet(client.getClientAuthenticationMethods))")
+    @Mapping(target = "clientAuthenticationMethods", expression = "java(stringToSet(client.getClientAuthenticationMethods()))")
     @Mapping(target = "authorizationGrantTypes", expression = "java(stringToSet(client.getAuthorizationGrantTypes()))")
     @Mapping(target = "scopes", expression = "java(stringToSet(client.getScopes()))")
     @Mapping(target = "redirectUris", expression = "java(stringToSet(client.getRedirectUris()))")

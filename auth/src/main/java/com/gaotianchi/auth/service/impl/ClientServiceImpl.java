@@ -24,13 +24,13 @@ import java.util.Set;
  * @author gaotianchi
  * @since 2024-11-24 20:35:24
  */
-@Service("clientService" )
+@Service("clientService")
 public class ClientServiceImpl implements ClientService {
 
     private final ClientDao clientDao;
 
     public ClientServiceImpl(ClientDao clientDao) {
-        Assert.notNull(clientDao, "clientRepository cannot be null" );
+        Assert.notNull(clientDao, "clientRepository cannot be null");
         this.clientDao = clientDao;
     }
 

@@ -14,9 +14,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import static com.gaotianchi.auth.utils.MapTool.parseMap;
 import static com.gaotianchi.auth.utils.MapTool.writeMap;
 
 /**
@@ -33,7 +33,7 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    private Client fromDtoToClient(CreateClientDto createClientDto) {
+    private Client toClient(CreateClientDto createClientDto) {
         List<String> clientAuthenticationMethods = new ArrayList<>(createClientDto.getClientAuthenticationMethods().size());
         clientAuthenticationMethods.addAll(createClientDto.getClientAuthenticationMethods());
 
@@ -42,8 +42,11 @@ public class ClientController {
 
         return Client.builder()
                 .clientId(createClientDto.getClientId())
+                .clientIdIssuedAt(new Date())
                 .clientSecret(createClientDto.getClientSecret())
                 .clientName(createClientDto.getClientName())
+                .clientSettings(writeMap(createClientDto.getClientSettings()))
+                .tokenSettings(writeMap(createClientDto.getTokenSettings()))
                 .clientAuthenticationMethods(StringUtils.collectionToCommaDelimitedString(clientAuthenticationMethods))
                 .authorizationGrantTypes(StringUtils.collectionToCommaDelimitedString(authorizationGrantTypes))
                 .redirectUris(StringUtils.collectionToCommaDelimitedString(createClientDto.getRedirectUris()))
@@ -52,7 +55,7 @@ public class ClientController {
                 .build();
     }
 
-    private ClientVO fromClientToClientVO(Client client) {
+    private ClientVO toClientVO(Client client) {
         return ClientVO.builder()
                 .id(client.getId())
                 .clientId(client.getClientId())
@@ -69,7 +72,7 @@ public class ClientController {
 
     @PostMapping("" )
     public VO<String> createClient(@Valid @RequestBody CreateClientDto createClientDto) {
-        Client client = fromDtoToClient(createClientDto);
+        Client client = toClient(createClientDto);
         clientService.insert(client);
         return VO.response(Code.SUCCESS, "/client/info/" + client.getId());
     }
@@ -88,7 +91,7 @@ public class ClientController {
                                     @Min(value = 1, message = "id 必须大于等于 1" ) Integer id) {
         Client client = clientService.findById(id);
 
-        ClientVO clientVO = fromClientToClientVO(client);
+        ClientVO clientVO = toClientVO(client);
         return VO.response(Code.SUCCESS, clientVO);
     }
 }

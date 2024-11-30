@@ -1,5 +1,6 @@
 package com.gaotianchi.auth.dto;
 
+import com.gaotianchi.auth.entity.Client;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -39,6 +40,12 @@ public class CreateClientDto {
 
     @Size(max = 255, message = "客户端密钥长度不能超过255" )
     private String clientSecret;
+
+    @NotNull(message = "客户端设置不能为空")
+    private Map<@NotBlank(message = "设置键不能为空") String, Object> clientSettings;
+
+    @NotNull(message = "令牌设置不能为空")
+    private Map<@NotBlank(message = "设置键不能为空") String, Object> tokenSettings;
 
     @Size(max = 1000, message = "注销后重定向URI列表长度不能超过1000" )
     private Set<@NotBlank(message = "注销后重定向URI不能为空" ) String> postLogoutRedirectUris;

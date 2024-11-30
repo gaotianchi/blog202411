@@ -59,7 +59,7 @@ public class ClientServiceImpl implements ClientService {
         return new ClientAuthenticationMethod(clientAuthenticationMethod);      // Custom client authentication method
     }
 
-    public static RegisteredClient fromClientToRegisteredClient(Client client) {
+    public static RegisteredClient toRegisteredClient(Client client) {
 
         Set<String> clientAuthenticationMethods = StringUtils.commaDelimitedListToSet(
                 client.getClientAuthenticationMethods());
@@ -72,7 +72,7 @@ public class ClientServiceImpl implements ClientService {
         Set<String> postLogoutRedirectUris = StringUtils.commaDelimitedListToSet(
                 client.getPostLogoutRedirectUris());
 
-        return RegisteredClient.withId(client.getClientId())
+        RegisteredClient.Builder builder =  RegisteredClient.withId(client.getClientId())
                 .id(client.getId().toString())
                 .clientId(client.getClientId())
                 .clientSecret(client.getClientSecret())
@@ -87,16 +87,16 @@ public class ClientServiceImpl implements ClientService {
                 .redirectUris((uris) -> uris.addAll(redirectUris))
                 .scopes((scopes) -> scopes.addAll(clientScopes))
                 .postLogoutRedirectUris((uris) -> uris.addAll(postLogoutRedirectUris))
-                .clientSettings(ClientSettings.builder()
-                        .requireProofKey(true)
-                        .requireAuthorizationConsent(false)
-                        .build())
-                .tokenSettings(TokenSettings.builder()
-                        .accessTokenTimeToLive(Duration.ofMinutes(10))
-                        .refreshTokenTimeToLive(Duration.ofDays(30))
-                        .reuseRefreshTokens(false)
-                        .build())
-                .build();
+                .clientSettings(ClientSettings.builder().requireProofKey(true).build())
+                .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofHours(1)).refreshTokenTimeToLive(Duration.ofDays(30)).build());
+
+//        Map<String, Object> clientSettingsMap = parseMap(client.getClientSettings());
+//        builder.clientSettings(ClientSettings.withSettings(clientSettingsMap).build());
+
+//        Map<String, Object> tokenSettingsMap = parseMap(client.getTokenSettings());
+//        builder.tokenSettings(TokenSettings.withSettings(tokenSettingsMap).build());
+
+        return builder.build();
     }
 
     @Override
@@ -133,12 +133,12 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public RegisteredClient findById(String id) {
         Client client = findById(Integer.valueOf(id));
-        return fromClientToRegisteredClient(client);
+        return toRegisteredClient(client);
     }
 
     @Override
     public RegisteredClient findByClientId(String clientId) {
         Client client = clientDao.selectByClientIdOrClientName(clientId);
-        return fromClientToRegisteredClient(client);
+        return toRegisteredClient(client);
     }
 }

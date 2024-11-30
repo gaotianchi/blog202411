@@ -27,7 +27,6 @@ public class ClientVO implements Serializable {
     private Set<String> authorizationGrantTypes;
     private Set<String> scopes;
     private Set<String> redirectUris;
-    private Date clientSecretIssuedAt;
     private Date clientSecretExpiresAt;
     private String postLogoutRedirectUris;
 }

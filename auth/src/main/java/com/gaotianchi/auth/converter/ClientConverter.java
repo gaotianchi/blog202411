@@ -5,6 +5,7 @@ import com.gaotianchi.auth.entity.Client;
 import com.gaotianchi.auth.vo.ClientVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -32,6 +33,7 @@ public interface ClientConverter {
     @Mapping(target = "redirectUris", expression = "java(stringToSet(client.getRedirectUris()))")
     @Mapping(target = "postLogoutRedirectUris", expression = "java(stringToSet(client.getPostLogoutRedirectUris()))")
     ClientVO toVO(Client client);
+
 
     default String setToString(Set<String> setData) {
         if (ObjectUtils.isEmpty(setData)) {

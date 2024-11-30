@@ -69,32 +69,31 @@ public class ClientServiceImpl implements ClientService {
         Set<String> postLogoutRedirectUris = StringUtils.commaDelimitedListToSet(
                 client.getPostLogoutRedirectUris());
 
-        RegisteredClient.Builder builder =  RegisteredClient.withId(client.getClientId())
+        return RegisteredClient.withId(client.getClientId())
                 .id(client.getId().toString())
                 .clientId(client.getClientId())
                 .clientSecret(client.getClientSecret())
                 .clientName(client.getClientName())
                 .clientIdIssuedAt(client.getClientIdIssuedAt().toInstant())
                 .clientAuthenticationMethods(authenticationMethods ->
-                        clientAuthenticationMethods.forEach(authenticationMethod ->
-                                authenticationMethods.add(resolveClientAuthenticationMethod(authenticationMethod))))
-                .authorizationGrantTypes((grantTypes) ->
-                        authorizationGrantTypes.forEach(grantType ->
-                                grantTypes.add(resolveAuthorizationGrantType(grantType))))
-                .redirectUris((uris) -> uris.addAll(redirectUris))
-                .scopes((scopes) -> scopes.addAll(clientScopes))
-                .postLogoutRedirectUris((uris) -> uris.addAll(postLogoutRedirectUris))
+                        clientAuthenticationMethods.forEach(method ->
+                                authenticationMethods.add(resolveClientAuthenticationMethod(method))))
+                .authorizationGrantTypes(grantTypes ->
+                        authorizationGrantTypes.forEach(type ->
+                                grantTypes.add(resolveAuthorizationGrantType(type))))
+                .redirectUris(uris -> uris.addAll(redirectUris))
+                .scopes(scopes -> scopes.addAll(clientScopes))
+                .postLogoutRedirectUris(uris -> uris.addAll(postLogoutRedirectUris))
                 .clientSettings(ClientSettings.builder()
-                        .requireProofKey(true)
-                        .requireAuthorizationConsent(false)
+                        .requireProofKey(client.getRequireProofKey() == 1)
+                        .requireAuthorizationConsent(client.getRequireAuthorizationConsent() == 1)
                         .build())
                 .tokenSettings(TokenSettings.builder()
-                        .accessTokenTimeToLive(Duration.ofHours(1))
-                        .refreshTokenTimeToLive(Duration.ofDays(30))
-                        .reuseRefreshTokens(false)
-                        .build());
-
-        return builder.build();
+                        .accessTokenTimeToLive(Duration.ofSeconds(client.getAccessTokenTimeLive()))
+                        .refreshTokenTimeToLive(Duration.ofSeconds(client.getRefreshTokenTimeToLive()))
+                        .reuseRefreshTokens(client.getReuseRefreshTokens() == 1)
+                        .build())
+                .build();
     }
 
     @Override

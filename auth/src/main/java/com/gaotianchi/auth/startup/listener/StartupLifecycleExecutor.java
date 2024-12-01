@@ -22,6 +22,7 @@ public class StartupLifecycleExecutor implements SmartLifecycle {
 
     @Override
     public void start() {
+        log.info("Starting startup listener");
         taskManager.executeAllTasks();
         isRunning = true;
     }

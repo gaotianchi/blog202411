@@ -34,6 +34,8 @@ public enum Code {
     INVALID_PARAMETER(4001, "Invalid parameter."),
 
     // TODO: 第三方服务
+    DATABASE_CONNECTION_ERROR(5001, "Database connection error."),
+    DATABASE_INITIALIZATION_FAILED(5002, "Database initialization failed."),
 
     // 未知错误
     UNKNOWN_ERROR(9999, "Unknown error.");

@@ -1,4 +1,4 @@
-package com.gaotianchi.auth.controller;
+package com.gaotianchi.auth.rest;
 
 
 import com.gaotianchi.auth.annotation.TestAnnotation;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("test")
-public class TestController {
+public class TestRest {
 
     @TestAnnotation
     @GetMapping("/public/{param}")

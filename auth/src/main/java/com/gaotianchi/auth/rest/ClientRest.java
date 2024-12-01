@@ -1,4 +1,4 @@
-package com.gaotianchi.auth.controller;
+package com.gaotianchi.auth.rest;
 
 
 import com.gaotianchi.auth.converter.ClientConverter;
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
  **/
 @RestController
 @RequestMapping("client")
-public class ClientController {
+public class ClientRest {
 
     private final ClientService clientService;
 
     private final ClientConverter clientConverter;
 
-    public ClientController(ClientService clientService, ClientConverter clientConverter) {
+    public ClientRest(ClientService clientService, ClientConverter clientConverter) {
         this.clientService = clientService;
         this.clientConverter = clientConverter;
     }

@@ -26,7 +26,7 @@ public class LogAspect {
     /**
      * 定义切点，匹配所有控制器方法
      */
-    @Pointcut("execution(* com.gaotianchi.auth.controller..*(..))")
+    @Pointcut("execution(* com.gaotianchi.auth.rest..*(..))")
     public void controllerMethods() {
     }
 

@@ -1,4 +1,4 @@
-package com.gaotianchi.auth.controller;
+package com.gaotianchi.auth.rest;
 
 import com.gaotianchi.auth.entity.User;
 import com.gaotianchi.auth.enums.Code;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("user")
-public class UserController {
+public class UserRest {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserRest(UserService userService) {
         this.userService = userService;
     }
 

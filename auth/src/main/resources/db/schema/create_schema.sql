@@ -1,4 +1,4 @@
-create table if not exists blog_auth.client
+CREATE TABLE IF NOT EXISTS blog_auth.client
 (
     id                            int auto_increment
         primary key,
@@ -14,12 +14,12 @@ create table if not exists blog_auth.client
     post_logout_redirect_uris     varchar(1000)                                                               null,
     require_proof_key             tinyint(1)    default 1                                                     not null,
     require_authorization_consent tinyint(1)    default 0                                                     not null,
-    access_token_time_live        int           default 18000                                                 not null,
+    access_token_time_live        int           default 1800                                                not null,
     refresh_token_time_to_live    int           default 302400                                                not null,
     reuse_refresh_tokens          tinyint(1)    default 0                                                     not null
 );
 
-create table if not exists blog_auth.permission
+CREATE TABLE IF NOT EXISTS blog_auth.permission
 (
     id          int auto_increment
         primary key,
@@ -33,7 +33,7 @@ create table if not exists blog_auth.permission
 )
     comment '权限表';
 
-create table if not exists blog_auth.role
+CREATE TABLE IF NOT EXISTS blog_auth.role
 (
     id          int auto_increment
         primary key,
@@ -47,7 +47,7 @@ create table if not exists blog_auth.role
 )
     comment '角色表';
 
-create table if not exists blog_auth.role_permission
+CREATE TABLE IF NOT EXISTS blog_auth.role_permission
 (
     id              int auto_increment
         primary key,
@@ -60,7 +60,7 @@ create table if not exists blog_auth.role_permission
 )
     comment '角色权限表';
 
-create table if not exists blog_auth.user
+CREATE TABLE IF NOT EXISTS blog_auth.user
 (
     id              int auto_increment
         primary key,
@@ -82,7 +82,7 @@ create table if not exists blog_auth.user
 )
     comment '用户表';
 
-create table if not exists blog_auth.action_log
+CREATE TABLE IF NOT EXISTS blog_auth.action_log
 (
     id          int auto_increment
         primary key,
@@ -111,7 +111,7 @@ create index action_log_user_id_index
     on blog_auth.action_log (user_id)
     comment '快速查询某个用户的操作日志';
 
-create table if not exists blog_auth.user_role
+CREATE TABLE IF NOT EXISTS blog_auth.user_role
 (
     id        int auto_increment
         primary key,
@@ -122,5 +122,3 @@ create table if not exists blog_auth.user_role
     constraint user_role_user_id_fk
         foreign key (user_id) references blog_auth.user (id)
 );
-
-

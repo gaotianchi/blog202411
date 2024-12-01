@@ -2,21 +2,21 @@ create table if not exists blog_auth.client
 (
     id                            int auto_increment
         primary key,
-    client_id                     varchar(255)                         not null,
-    client_id_issued_at           timestamp  default CURRENT_TIMESTAMP not null,
-    client_secret                 varchar(255)                         null,
-    client_secret_expires_at      timestamp                            null,
-    client_name                   varchar(255)                         not null,
-    authorization_grant_types     varchar(1000)                        null,
-    redirect_uris                 varchar(1000)                        null,
-    post_logout_redirect_uris     varchar(1000)                        null,
-    scopes                        varchar(1000)                        not null,
-    client_authentication_methods varchar(1000)                        not null,
-    require_proof_key             tinyint(1) default 1                 not null,
-    require_authorization_consent tinyint(1) default 0                 not null,
-    access_token_time_live        int        default 18000             not null,
-    refresh_token_time_to_live    int        default 302400            not null,
-    reuse_refresh_tokens          tinyint(1) default 0                 not null
+    client_id                     varchar(255)                                                                not null,
+    client_id_issued_at           timestamp     default CURRENT_TIMESTAMP                                     not null,
+    client_secret                 varchar(255)                                                                null,
+    client_secret_expires_at      timestamp                                                                   null,
+    client_name                   varchar(255)                                                                not null,
+    authorization_grant_types     varchar(1000) default 'refresh_token,client_credentials,authorization_code' not null,
+    redirect_uris                 varchar(1000)                                                               not null,
+    scopes                        varchar(1000) default 'openid'                                              not null,
+    client_authentication_methods varchar(1000) default 'client_secret_post,client_secret_basic'              not null,
+    post_logout_redirect_uris     varchar(1000)                                                               null,
+    require_proof_key             tinyint(1)    default 1                                                     not null,
+    require_authorization_consent tinyint(1)    default 0                                                     not null,
+    access_token_time_live        int           default 18000                                                 not null,
+    refresh_token_time_to_live    int           default 302400                                                not null,
+    reuse_refresh_tokens          tinyint(1)    default 0                                                     not null
 );
 
 create table if not exists blog_auth.permission
